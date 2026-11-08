@@ -45,7 +45,7 @@ export const sectors: Record<SectorSlug, Sector> = {
     h2b: "Common household systems",
     note: "",
     chips: ["Split systems", "Ducted", "Window and portable units", "Outdoor condensers"],
-    units: ["split-system-cleaning", "ducted-system-cleaning", "window-unit-cleaning", "portable-ac-cleaning"],
+    units: ["split-system-cleaning", "split-system-deep-clean", "mould-odour-treatment", "ducted-system-cleaning"],
     faqs: [
       { q: "Can tenants request a clean?", a: "Check with your property manager or landlord where approval is required. We're happy to send a quote you can forward on." },
       { q: "Do you clean multiple indoor units?", a: "Yes. Include the number and model information in your enquiry so the quote reflects every unit." },

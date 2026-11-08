@@ -43,6 +43,10 @@ export const IMAGES = {
   "contact-photo": P("27681472"),
   "banner-book": P("5463581"),
   "book-photo": P("5463583"),
+  // Indoor photography (added for the indoor-service restructure)
+  "indoor-split": P("38788452"),
+  "indoor-living": P("6588599"),
+  "indoor-remote": P("16695385"),
 };
 
 const outDir = join(process.cwd(), "public", "images");

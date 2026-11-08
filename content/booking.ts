@@ -28,8 +28,8 @@ export const quickUnitOptions: { label: string; value: UnitType | "" }[] = [
   { label: "Split", value: "Split system (wall-mounted)" },
   { label: "Ducted", value: "Ducted" },
   { label: "Cassette", value: "Ceiling cassette" },
-  { label: "Window", value: "Window or box unit" },
-  { label: "Portable", value: "Portable" },
+  { label: "Split deep clean", value: "Split system deep clean (indoor wash)" },
+  { label: "Mould or odour", value: "Mould or odour problem" },
   { label: "Other or not sure", value: "Not sure" },
 ];
 

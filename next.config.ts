@@ -21,6 +21,9 @@ const nextConfig: NextConfig = {
       { source: "/book/thank-you", destination: "/thank-you", permanent: true },
       { source: "/sectors/residential", destination: "/residential", permanent: true },
       { source: "/sectors/commercial", destination: "/commercial", permanent: true },
+      // Window and portable services were retired in favour of indoor-unit services.
+      { source: "/services/window-unit-cleaning", destination: "/services/split-system-cleaning", permanent: true },
+      { source: "/services/portable-ac-cleaning", destination: "/services/split-system-cleaning", permanent: true },
     ];
   },
 };

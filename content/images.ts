@@ -30,7 +30,7 @@ const img = (
 ): SiteImage => ({ src: `/images/${file}.jpg`, alt, credit, creditHref, orientation, focal });
 
 /** Files that are taller than wide (2:3). Everything else is landscape. */
-const PORTRAIT = new Set(["hero-1", "hero-2", "step-1", "about-who", "about-approach-2", "book-photo", "outdoor-detail", "under-ceiling-detail"]);
+const PORTRAIT = new Set(["uc-tech-spray", "hero-1", "hero-2", "step-1", "about-who", "about-approach-2", "book-photo", "outdoor-detail", "under-ceiling-detail"]);
 
 const CREDIT = {
   bulat: ["Photo by bulat843 on Pexels", "https://www.pexels.com/@bulat843-1243575272/"],
@@ -57,97 +57,108 @@ const CREDIT = {
   kuhn: ["Photo by Kathleen Austin Kuhn on Pexels", "https://www.pexels.com/@kathleen-austin-kuhn-2152973960/"],
   ehlers: ["Photo by Magda Ehlers on Pexels", "https://www.pexels.com/@magda-ehlers-pexels/"],
   rangga: ["Photo by Putra Rangga on Pexels", "https://www.pexels.com/@putra-rangga-1032291993/"],
+  neosiam: ["Photo by NEOSiAM 18+ on Pexels", "https://www.pexels.com/@neosiam/"],
+  artbovich: ["Photo by Max Vakhtbovych on Pexels", "https://www.pexels.com/@artbovich/"],
+  zerdzicki: ["Photo by Jakub Zerdzicki on Pexels", "https://www.pexels.com/@jakubzerdzicki/"],
 } as const;
 
 type CreditKey = keyof typeof CREDIT;
 const c = (file: string, alt: string, key: CreditKey, focal?: string) =>
   img(file, alt, CREDIT[key][0], CREDIT[key][1], PORTRAIT.has(file) ? "portrait" : "landscape", focal);
 
+/** Photos supplied by the client (files prefixed uc-). No stock credit is shown. */
+const own = (file: string, alt: string, focal?: string) => img(file, alt, undefined, undefined, PORTRAIT.has(file) ? "portrait" : "landscape", focal);
+
 export type ServiceImageSet = { hero: SiteImage; detail: SiteImage; card: SiteImage };
 
 export const images = {
   hero: [
-    c("hero-1", "Technician checking an air-conditioning system on site", "bulat", "60% 45%"),
+    c("hero-1", "Technician checking an indoor air-conditioning unit", "bulat", "60% 45%"),
     c("hero-2", "Living room with a wall-mounted split system air conditioner", "badran", "50% 35%"),
     c("hero-3", "Close-up of a clean wall-mounted split system with the louvre open", "karimov"),
-    c("hero-4", "Technician working on an outdoor air-conditioning unit", "lowhong"),
+    c("indoor-living", "Modern living area with a wall-mounted split system", "artbovich", "50% 40%"),
   ],
+  /**
+   * Indoor services use indoor photography only. Several older files keep
+   * misleading names (ducted-hero, ducted-detail, cassette-detail and
+   * bulkhead-detail are all outdoor condensers), so they are no longer used here.
+   */
   services: {
     "split-system-cleaning": {
-      hero: c("split-hero", "Wall-mounted split system air conditioner in a bright room", "christiaan"),
-      detail: c("split-detail", "Split system outdoor unit mounted under a carport roof", "andrianto"),
-      card: c("split-detail", "Split system outdoor unit mounted under a carport roof", "andrianto"),
+      hero: own("uc-pressure-wash", "Technician rinsing the coil of a wall-mounted split system", "45% 40%"),
+      detail: own("uc-tech-cap", "Technician opening the front panel of a split system", "45% 40%"),
+      card: own("uc-filter-blue", "Gloved hands removing a split system filter", "50% 45%"),
+    },
+    "split-system-deep-clean": {
+      hero: own("uc-wash-bag", "Coil being washed with a wash bag fitted under the indoor unit", "50% 45%"),
+      detail: own("uc-foam-coil", "Technician applying coil cleaner with plastic sheeting protecting the wall", "40% 45%"),
+      card: own("uc-wash-bag", "Indoor unit wash with a wash bag fitted", "50% 45%"),
+    },
+    "mould-odour-treatment": {
+      hero: own("uc-spray-coil", "Technician spraying treatment onto an indoor unit's coil", "45% 45%"),
+      detail: own("uc-filter-dusty", "Dust-clogged filter being removed from a split system", "45% 45%"),
+      card: own("uc-spray-coil", "Coil treatment on an indoor unit", "45% 45%"),
     },
     "ducted-system-cleaning": {
-      hero: c("ducted-hero", "Ceiling air vent of a ducted air-conditioning system", "prasopchok"),
-      detail: c("ducted-detail", "Linear ceiling diffuser for ducted air conditioning", "fursenko"),
-      card: c("ducted-card", "Return-air grille in a plaster ceiling", "prasopchok"),
+      hero: c("cassette-hero", "Removing a ceiling return-air grille to reach the filter", "birmingham", "50% 45%"),
+      detail: c("indoor-living", "Open-plan living area served by air conditioning", "artbovich", "60% 40%"),
+      card: c("cassette-hero", "Ceiling return-air grille being removed", "birmingham", "50% 45%"),
     },
     "cassette-cleaning": {
-      hero: c("cassette-hero", "Technician servicing a ceiling-mounted air-conditioning unit", "birmingham"),
-      detail: c("cassette-detail", "Ceiling cassette air conditioner in an office", "kien"),
-      card: c("cassette-card", "Ceiling cassette units in a commercial space", "lacoste"),
+      hero: c("cassette-card", "Technician working at ceiling height in a commercial space", "lacoste", "45% 50%"),
+      detail: c("hero-1", "Technician checking an indoor unit", "bulat", "60% 45%"),
+      card: c("cassette-card", "Technician working at ceiling height", "lacoste", "45% 50%"),
     },
     "under-ceiling-cleaning": {
-      hero: c("cassette-card", "Suspended ceiling air-conditioning units in a commercial space", "lacoste"),
-      detail: c("under-ceiling-detail", "Under-ceiling air-conditioning unit", "aboodi", "50% 48%"),
-      card: c("cassette-hero", "Technician servicing a ceiling-mounted unit", "birmingham"),
+      hero: c("cassette-hero", "Overhead air-conditioning grille being removed", "birmingham", "50% 40%"),
+      detail: c("cassette-card", "Technician on an elevated platform in a commercial space", "lacoste", "45% 50%"),
+      card: c("hero-1", "Technician checking an indoor unit", "bulat", "60% 40%"),
     },
     "bulkhead-cleaning": {
-      hero: c("ducted-card", "Concealed air-conditioning grille in a ceiling", "prasopchok"),
-      detail: c("bulkhead-detail", "Concealed indoor air-conditioning unit", "alpha"),
-      card: c("under-ceiling-detail", "Concealed-style indoor unit", "aboodi", "50% 48%"),
-    },
-    "window-unit-cleaning": {
-      hero: c("window-hero", "Window air conditioner installed in a building facade", "pachmann"),
-      detail: c("window-detail", "Technician working on an air-conditioning unit", "tima"),
-      card: c("window-card", "Clean outdoor air-conditioning unit on a painted brick wall", "clow"),
-    },
-    "portable-ac-cleaning": {
-      hero: c("portable-hero", "Rows of air-conditioning units showing dust build-up", "illia"),
-      detail: c("hero-2", "Living room with a wall-mounted split system", "badran", "50% 35%"),
-      card: c("ducted-hero", "Air vent in a ceiling", "prasopchok"),
+      hero: c("indoor-living", "Living area with discreet indoor air conditioning", "artbovich", "50% 40%"),
+      detail: c("cassette-hero", "Ceiling grille removed to access the filter", "birmingham", "50% 45%"),
+      card: c("indoor-living", "Living area with discreet indoor air conditioning", "artbovich", "40% 40%"),
     },
     "outdoor-condenser-cleaning": {
       hero: c("outdoor-hero", "Weathered outdoor condenser unit on a brick wall", "nikonov"),
-      detail: c("outdoor-detail", "Outdoor condenser unit", "alzate", "50% 55%"),
+      detail: c("outdoor-detail", "Outdoor condenser units on wall brackets", "alzate", "50% 55%"),
       card: c("outdoor-card", "Outdoor condenser unit in afternoon light", "kao"),
     },
   } satisfies Record<string, ServiceImageSet>,
   steps: [
-    c("step-1", "Technician reviewing an air-conditioning system", "cortes", "50% 42%"),
-    c("step-2", "Technician discussing a service", "kuhn"),
-    c("step-3", "Technician preparing equipment", "cortes"),
-    c("cassette-hero", "Technician servicing a ceiling-mounted unit", "birmingham"),
-    c("hero-2", "Clean living room with a wall-mounted split system", "badran"),
+    c("indoor-remote", "Checking how the air conditioner is running", "zerdzicki", "60% 50%"),
+    own("uc-tech-cap", "Technician inspecting a split system", "45% 40%"),
+    own("uc-filter-blue", "Filter removed for cleaning", "50% 45%"),
+    own("uc-wash-bag", "Indoor unit washed with a wash bag fitted", "50% 45%"),
+    c("hero-2", "Clean living room with a wall-mounted split system", "badran", "50% 35%"),
   ],
   sectors: {
     residential: c("hero-2", "Modern living room with a wall-mounted split system", "badran", "50% 35%"),
-    commercial: c("hero-1", "Technician servicing a commercial air-conditioning unit", "bulat", "60% 45%"),
+    commercial: c("hero-1", "Technician servicing a commercial indoor unit", "bulat", "60% 45%"),
   },
   banners: {
     // Banners are very wide (about 3:1 on desktop), so every entry is a landscape
     // photo with a focal point that keeps the subject in the visible band.
-    services: c("banner-services", "Technician at work on a rooftop air-conditioning unit", "cortes", "50% 45%"),
-    about: c("hero-4", "Technician working on an outdoor unit", "lowhong", "50% 45%"),
+    services: own("uc-foam-coil", "Technician cleaning the coil of an indoor split system", "50% 40%"),
+    about: c("indoor-living", "Modern living area with a wall-mounted split system", "artbovich", "40% 30%"),
     faq: c("hero-3", "Clean wall-mounted split system with the louvre open", "karimov", "50% 50%"),
-    contact: c("step-3", "Technician checking gauges on an outdoor unit", "cortes", "50% 55%"),
-    book: c("banner-book", "Technician servicing a rooftop unit", "cortes", "50% 55%"),
-    areas: c("window-detail", "Technician checking gauges on an outdoor unit", "tima", "50% 50%"),
-    residential: c("step-2", "Technician inspecting a home air-conditioning unit", "kuhn", "50% 40%"),
+    contact: c("indoor-remote", "Hand holding an air-conditioner remote", "zerdzicki", "60% 50%"),
+    book: own("uc-wash-bag", "Indoor unit wash with a wash bag fitted", "50% 45%"),
+    areas: c("hero-4", "Technician working on an outdoor unit", "lowhong", "50% 45%"),
+    residential: own("uc-pressure-wash", "Technician cleaning a split system in a home", "45% 40%"),
     commercial: c("cassette-card", "Technician working at ceiling height in a commercial space", "lacoste", "50% 60%"),
   },
   about: {
-    who: c("about-who", "Technician at work on an indoor unit", "cortes"),
+    who: own("uc-tech-cap", "Technician at work on an indoor split system", "55% 45%"),
     approach: [
-      c("banner-services", "Technician at work on a rooftop air-conditioning unit", "cortes", "50% 45%"),
-      c("about-approach-2", "Technician reading gauges on an outdoor unit", "cortes", "50% 40%"),
-      c("hero-2", "Clean living room with a wall split", "badran", "50% 35%"),
+      own("uc-wash-bag", "Indoor unit washed with a wash bag fitted", "50% 45%"),
+      own("uc-filter-dusty", "Dusty filter removed from a split system", "45% 45%"),
+      own("uc-tech-spray", "Technician cleaning a split system with spray and gloves", "50% 35%"),
     ],
   },
-  contact: c("contact-photo", "Technicians cleaning outdoor units on a building facade", "rangga"),
-  book: c("window-detail", "Technician checking gauges on an outdoor unit", "tima"),
-  cta: c("hero-4", "Technician working on an outdoor unit", "lowhong"),
+  contact: own("uc-tech-cap", "Technician working on a wall-mounted split system", "50% 40%"),
+  book: own("uc-foam-coil", "Technician applying coil cleaner to an indoor unit", "40% 45%"),
+  cta: own("uc-pressure-wash", "Technician rinsing an indoor split system", "40% 40%"),
   /**
    * Before/after pairs. Illustrative stock only — captioned as such on the page.
    * Set `genuine: true` only when replacing with real paired job photos
@@ -164,12 +175,12 @@ export const images = {
   ],
   /** Gallery. Illustrative stock until real job photos are supplied. */
   gallery: [
-    { image: c("cassette-hero", "Ceiling unit being serviced", "birmingham"), caption: "Ceiling unit service", genuine: false },
-    { image: c("hero-3", "Clean split system close-up", "karimov"), caption: "Split system, louvre open", genuine: false },
-    { image: c("outdoor-detail", "Outdoor condenser unit", "alzate", "50% 55%"), caption: "Outdoor condenser", genuine: false },
-    { image: c("about-approach-2", "Technician reading gauges", "cortes", "50% 40%"), caption: "Pressure check on site", genuine: false },
-    { image: c("window-detail", "Technician at work", "tima"), caption: "Filter and cover inspection", genuine: false },
-    { image: c("ducted-detail", "Linear ceiling diffuser", "fursenko"), caption: "Ducted diffuser", genuine: false },
+    { image: own("uc-wash-bag", "Wash bag fitted under an indoor unit"), caption: "Indoor unit wash", genuine: false },
+    { image: own("uc-foam-coil", "Coil cleaner applied to an indoor unit", "40% 45%"), caption: "Coil cleaning", genuine: false },
+    { image: own("uc-filter-blue", "Filter removed from a split system"), caption: "Filter removal", genuine: false },
+    { image: own("uc-spray-coil", "Coil treatment on an indoor unit", "45% 45%"), caption: "Coil treatment", genuine: false },
+    { image: own("uc-foam-wash", "Foam wash on a split system coil", "60% 45%"), caption: "Foam wash", genuine: false },
+    { image: c("cassette-hero", "Ceiling grille being removed", "birmingham"), caption: "Ceiling grille and filter access", genuine: false },
   ],
 };
 

@@ -1,17 +1,17 @@
 import { images, type ServiceImageSet } from "./images";
 
 /**
- * The eight cleaning services. Northline Air Care offers cleaning and related
+ * The eight cleaning services, weighted toward indoor units. Northline Air Care offers cleaning and related
  * servicing only — no installation, repair or refrigerant work anywhere on the site.
  */
 export type ServiceSlug =
   | "split-system-cleaning"
+  | "split-system-deep-clean"
+  | "mould-odour-treatment"
   | "ducted-system-cleaning"
   | "cassette-cleaning"
   | "under-ceiling-cleaning"
   | "bulkhead-cleaning"
-  | "window-unit-cleaning"
-  | "portable-ac-cleaning"
   | "outdoor-condenser-cleaning";
 
 export type Service = {
@@ -66,11 +66,63 @@ export const services: Service[] = [
       { q: "How long does a split system clean usually take?", a: "It depends on the unit's condition, access and the agreed scope. We'll give you an indication when we confirm the booking rather than quoting a fixed time up front." },
       { q: "Do I need to do anything before the visit?", a: "Clear access to the indoor unit and, where relevant, the outdoor unit is the main thing. If the system has been switched off for a while, let us know in your request." },
     ],
-    related: ["outdoor-condenser-cleaning", "ducted-system-cleaning", "window-unit-cleaning"],
+    related: ["split-system-deep-clean", "mould-odour-treatment", "outdoor-condenser-cleaning"],
     sectors: ["residential", "commercial"],
     images: images.services["split-system-cleaning"],
     bookingLabel: "Split system (wall-mounted)",
     metaDescription: "Cleaning options for wall-mounted split system air conditioners. Filters, covers and accessible components, scope confirmed before work begins.",
+  },
+  {
+    slug: "split-system-deep-clean",
+    short: "Split System Deep Clean",
+    summary: "Wash-bag deep clean of the indoor coil and fan barrel.",
+    h1: "Split System Deep Clean (Indoor Unit Wash)",
+    unit: "split system indoor unit",
+    intro:
+      "When a routine clean is not enough, the indoor unit can be washed in place. A purpose-made wash bag is fitted under the unit, electrical parts are protected, and the coil and fan barrel are cleaned and rinsed so dirty water drains into the bag rather than onto your walls or floor.",
+    scope: [
+      "Covers, filters and louvres removed and cleaned",
+      "Electrical components and control board protected before washing",
+      "Wash bag fitted to catch run-off, walls and floor covered",
+      "Indoor coil and fan barrel cleaned and rinsed as agreed",
+      "Drain tray and outlet flushed, unit reassembled and test run",
+    ],
+    faqs: [
+      { q: "How is a deep clean different from a standard split clean?", a: "A standard clean focuses on filters, covers and accessible surfaces. A deep clean washes the coil and fan barrel inside the indoor unit, which is where built-up dust and grime usually sit. We'll recommend which suits your unit after hearing what you've noticed." },
+      { q: "Will it make a mess inside my home?", a: "The wash bag channels run-off into a bucket, and we cover the wall and floor beneath the unit. The work area is wiped down before we leave." },
+      { q: "How often does a unit need a deep clean?", a: "It depends on how much the unit runs and the environment. Units in kitchens, bedrooms that run overnight or dusty locations tend to need it sooner." },
+    ],
+    related: ["split-system-cleaning", "mould-odour-treatment", "cassette-cleaning"],
+    sectors: ["residential", "commercial"],
+    images: images.services["split-system-deep-clean"],
+    bookingLabel: "Split system deep clean (indoor wash)",
+    metaDescription: "Wash-bag deep clean for split system indoor units: coil and fan barrel washed in place with walls, floor and electrics protected.",
+  },
+  {
+    slug: "mould-odour-treatment",
+    short: "Mould & Odour Treatment",
+    summary: "For indoor units with musty smells or visible mould.",
+    h1: "Air Conditioner Mould & Odour Treatment",
+    unit: "indoor unit",
+    intro:
+      "A musty smell when the air conditioner starts, or dark spots on the louvres and fan, usually means moisture and grime have built up inside the indoor unit. We clean the affected components and apply a treatment suited to the unit, then explain how to reduce the chance of it coming back.",
+    scope: [
+      "Inspection of louvres, fan barrel, coil and drain tray for build-up",
+      "Deep clean of affected indoor components as agreed",
+      "Anti-microbial coil treatment suitable for the unit",
+      "Drain path check to reduce standing moisture",
+      "Practical tips on run times and settings to limit regrowth",
+    ],
+    faqs: [
+      { q: "Why does my air conditioner smell musty?", a: "Indoor units pull moisture out of the air. If the coil, drain tray or fan barrel stays damp and dusty, mould and bacteria can grow and the smell is pushed into the room when the unit starts." },
+      { q: "Is the treatment safe for my family and pets?", a: "We use products intended for air-conditioning coils and follow the manufacturer's directions, including ventilation and drying time. Let us know about any sensitivities in your request." },
+      { q: "Will the smell come back?", a: "Cleaning removes the build-up, but conditions that caused it can return. We'll suggest settings and a cleaning interval that suit how you use the unit." },
+    ],
+    related: ["split-system-deep-clean", "split-system-cleaning", "ducted-system-cleaning"],
+    sectors: ["residential", "commercial"],
+    images: images.services["mould-odour-treatment"],
+    bookingLabel: "Mould or odour problem",
+    metaDescription: "Mould and odour treatment for indoor air-conditioning units: affected components deep cleaned, coils treated and drain paths checked.",
   },
   {
     slug: "ducted-system-cleaning",
@@ -171,54 +223,6 @@ export const services: Service[] = [
     metaDescription: "Cleaning options for concealed bulkhead air conditioning systems. Configuration and access confirmed before a quote is prepared.",
   },
   {
-    slug: "window-unit-cleaning",
-    short: "Window Unit Cleaning",
-    summary: "Cleaning options for window and box air conditioners.",
-    h1: "Window & Box Air Conditioner Cleaning",
-    unit: "window or box unit",
-    intro:
-      "Window and box units combine several functions in one housing. We discuss accessible cleaning points and any safe access requirements before arranging work.",
-    scope: [
-      "Front panel and filter removal and cleaning",
-      "Accessible coil face and housing attention",
-      "External grille and drain path check",
-      "Safe access to the outside face confirmed in advance",
-      "Reassembly and tidy-up",
-    ],
-    faqs: [
-      { q: "Can the unit be cleaned in place?", a: "Often yes for accessible components. Where the outside face can't be reached safely, we'll explain what can be done and what can't." },
-    ],
-    related: ["portable-ac-cleaning", "split-system-cleaning", "outdoor-condenser-cleaning"],
-    sectors: ["residential"],
-    images: images.services["window-unit-cleaning"],
-    bookingLabel: "Window or box unit",
-    metaDescription: "Cleaning options for window and box air conditioners, covering accessible filters, panels and grilles with safe access confirmed first.",
-  },
-  {
-    slug: "portable-ac-cleaning",
-    short: "Portable AC Cleaning",
-    summary: "Maintenance support for portable air conditioners.",
-    h1: "Portable Air Conditioner Cleaning",
-    unit: "portable air conditioner",
-    intro:
-      "Portable systems benefit from care appropriate to their filters, water management and model-specific instructions. Contact us to confirm whether your model is supported.",
-    scope: [
-      "Filter inspection and cleaning",
-      "Accessible intake and exhaust grille attention",
-      "Water tank and drain path check",
-      "Exhaust hose connection check",
-      "Model-specific care guidance where available",
-    ],
-    faqs: [
-      { q: "Is it worth cleaning a portable unit?", a: "Filters and grilles collect dust like any other unit. Tell us the model and what you're noticing and we'll advise whether a visit makes sense." },
-    ],
-    related: ["window-unit-cleaning", "split-system-cleaning", "outdoor-condenser-cleaning"],
-    sectors: ["residential"],
-    images: images.services["portable-ac-cleaning"],
-    bookingLabel: "Portable",
-    metaDescription: "Cleaning and maintenance support for portable air conditioners: filters, grilles and water management, with model support confirmed first.",
-  },
-  {
     slug: "outdoor-condenser-cleaning",
     short: "Outdoor Condenser Cleaning",
     summary: "Attention to accessible outdoor unit components.",
@@ -236,7 +240,7 @@ export const services: Service[] = [
     faqs: [
       { q: "Can you clean a unit on a roof or balcony?", a: "Possibly, depending on safe access. Describe where the unit sits and we'll confirm whether it can be included." },
     ],
-    related: ["split-system-cleaning", "ducted-system-cleaning", "cassette-cleaning"],
+    related: ["split-system-cleaning", "split-system-deep-clean", "ducted-system-cleaning"],
     sectors: ["residential", "commercial"],
     images: images.services["outdoor-condenser-cleaning"],
     bookingLabel: "Outdoor condenser only",
