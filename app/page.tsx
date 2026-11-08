@@ -18,7 +18,6 @@ import { WhyUs } from "@/components/sections/WhyUs";
 import { Gallery } from "@/components/sections/Gallery";
 import { BeforeAfterGrid } from "@/components/sections/BeforeAfter";
 import { Signs } from "@/components/sections/Signs";
-import { ServiceAreas } from "@/components/sections/ServiceAreas";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { QuoteCTA } from "@/components/sections/QuoteCTA";
 
@@ -65,7 +64,6 @@ export default function HomePage() {
       </section>
 
       <Signs />
-      <ServiceAreas />
 
       <FaqSection items={homeFaqs} eyebrow={faqSection.eyebrow} title={faqSection.title} link={faqSection.cta} />
 

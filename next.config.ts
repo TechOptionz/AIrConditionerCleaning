@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
+    // Every quality value used by next/image on the site (default is 75).
+    qualities: [70, 75, 82],
     deviceSizes: [360, 420, 640, 768, 1024, 1280, 1440, 1920, 2200],
     // Remote hosts are allowed so a stock image can be hot-swapped by URL in
     // content/images.ts without a redeploy of the /public folder.
@@ -21,6 +23,8 @@ const nextConfig: NextConfig = {
       { source: "/book/thank-you", destination: "/thank-you", permanent: true },
       { source: "/sectors/residential", destination: "/residential", permanent: true },
       { source: "/sectors/commercial", destination: "/commercial", permanent: true },
+      // The service areas page was removed; coverage is confirmed through the contact page.
+      { source: "/service-areas", destination: "/contact", permanent: true },
       // Window and portable services were retired in favour of indoor-unit services.
       { source: "/services/window-unit-cleaning", destination: "/services/split-system-cleaning", permanent: true },
       { source: "/services/portable-ac-cleaning", destination: "/services/split-system-cleaning", permanent: true },

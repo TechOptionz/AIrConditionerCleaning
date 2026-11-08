@@ -3,9 +3,10 @@
  * image can be replaced with a real job photo by swapping one entry (or by
  * overwriting the file in /public/images with the same name).
  *
- * All current photos are free-licence stock (Unsplash / Pexels) chosen in the
- * approved design. Credits are kept for attribution. None of them depict
- * Northline Air Care's own work and they are captioned as illustrative.
+ * Photos are a mix of free-licence stock (Unsplash / Pexels, credits kept below)
+ * and client-supplied files prefixed uc-. None are from Northline Air Care jobs,
+ * and the site no longer captions them as illustrative (client decision), so
+ * replace them with the business's own job photos before launch.
  */
 export type SiteImage = {
   src: string;
@@ -73,10 +74,17 @@ export type ServiceImageSet = { hero: SiteImage; detail: SiteImage; card: SiteIm
 
 export const images = {
   hero: [
-    c("hero-1", "Technician checking an indoor air-conditioning unit", "bulat", "60% 45%"),
-    c("hero-2", "Living room with a wall-mounted split system air conditioner", "badran", "50% 35%"),
-    c("hero-3", "Close-up of a clean wall-mounted split system with the louvre open", "karimov"),
-    c("indoor-living", "Modern living area with a wall-mounted split system", "artbovich", "50% 40%"),
+    // Full-screen slides must be at least ~1000 px wide (ideally 1600+) or they look blurry
+    // when stretched across a desktop screen. The smaller uc- photos are used in cards,
+    // detail frames and the gallery instead. Swap in larger cleaning photos here as they arrive.
+    // Mix of six: four technicians cleaning, two clean units. The *-hero files are
+    // sharpened high-quality enlargements of the smaller supplied photos.
+    own("uc-filter-service", "Technician removing the filters from a wall-mounted split system", "45% 30%"),
+    own("uc-wash-bag-rinse-hero", "Technician rinsing an indoor unit's coil into a wash bag", "50% 40%"),
+    c("hero-3", "Clean wall-mounted split system with the louvre open", "karimov", "50% 50%"),
+    own("uc-coil-rinse-hero", "Indoor coil rinsed with a wash bag fitted below", "55% 45%"),
+    own("uc-bag-wand-rinse", "Technician spraying an indoor coil with a wash bag fitted around the unit", "55% 45%"),
+    c("indoor-split", "Clean wall-mounted split system in a bright room", "neosiam", "55% 40%"),
   ],
   /**
    * Indoor services use indoor photography only. Several older files keep
@@ -85,39 +93,41 @@ export const images = {
    */
   services: {
     "split-system-cleaning": {
-      hero: own("uc-pressure-wash", "Technician rinsing the coil of a wall-mounted split system", "45% 40%"),
+      hero: own("uc-filter-service", "Technician removing the filters from a wall-mounted split system", "50% 35%"),
       detail: own("uc-tech-cap", "Technician opening the front panel of a split system", "45% 40%"),
-      card: own("uc-filter-blue", "Gloved hands removing a split system filter", "50% 45%"),
+      card: own("uc-filter-spray", "Gloved technician cleaning a split system filter", "50% 40%"),
     },
     "split-system-deep-clean": {
-      hero: own("uc-wash-bag", "Coil being washed with a wash bag fitted under the indoor unit", "50% 45%"),
-      detail: own("uc-foam-coil", "Technician applying coil cleaner with plastic sheeting protecting the wall", "40% 45%"),
-      card: own("uc-wash-bag", "Indoor unit wash with a wash bag fitted", "50% 45%"),
+      hero: own("uc-wash-bag-rinse", "Technician rinsing an indoor unit's coil into a wash bag", "45% 35%"),
+      detail: own("uc-blue-bag-spray", "Technician cleaning the indoor unit with a wash bag fitted", "40% 40%"),
+      card: own("uc-bag-wand-rinse", "Indoor coil sprayed with a wash bag fitted", "50% 45%"),
     },
     "mould-odour-treatment": {
-      hero: own("uc-spray-coil", "Technician spraying treatment onto an indoor unit's coil", "45% 45%"),
+      hero: own("uc-coil-rinse", "Indoor coil being rinsed clean with a wash bag fitted", "55% 45%"),
       detail: own("uc-filter-dusty", "Dust-clogged filter being removed from a split system", "45% 45%"),
       card: own("uc-spray-coil", "Coil treatment on an indoor unit", "45% 45%"),
     },
     "ducted-system-cleaning": {
       hero: c("cassette-hero", "Removing a ceiling return-air grille to reach the filter", "birmingham", "50% 45%"),
       detail: c("indoor-living", "Open-plan living area served by air conditioning", "artbovich", "60% 40%"),
-      card: c("cassette-hero", "Ceiling return-air grille being removed", "birmingham", "50% 45%"),
+      card: own("uc-filter-dusty", "Dusty filter removed for cleaning", "45% 45%"),
     },
     "cassette-cleaning": {
-      hero: c("cassette-card", "Technician working at ceiling height in a commercial space", "lacoste", "45% 50%"),
-      detail: c("hero-1", "Technician checking an indoor unit", "bulat", "60% 45%"),
-      card: c("cassette-card", "Technician working at ceiling height", "lacoste", "45% 50%"),
+      hero: c("cassette-hero", "Ceiling unit grille being lowered to reach the filter", "birmingham", "50% 45%"),
+      detail: own("uc-filter-blue", "Gloved hands removing a filter for cleaning", "50% 45%"),
+      card: c("cassette-hero", "Ceiling unit grille being lowered", "birmingham", "50% 45%"),
     },
     "under-ceiling-cleaning": {
-      hero: c("cassette-hero", "Overhead air-conditioning grille being removed", "birmingham", "50% 40%"),
-      detail: c("cassette-card", "Technician on an elevated platform in a commercial space", "lacoste", "45% 50%"),
-      card: c("hero-1", "Technician checking an indoor unit", "bulat", "60% 40%"),
+      // Stopgap: no photo of a suspended under-ceiling unit is available yet. The overhead
+      // grille shot is the closest match; replace with a real under-ceiling photo when supplied.
+      hero: c("cassette-hero", "Technician working on an overhead air-conditioning unit", "birmingham", "50% 40%"),
+      detail: c("cassette-hero", "Overhead unit grille lowered to reach the filter", "birmingham", "60% 50%"),
+      card: own("uc-foam-wash", "Foam cleaner on an indoor unit coil", "60% 45%"),
     },
     "bulkhead-cleaning": {
-      hero: c("indoor-living", "Living area with discreet indoor air conditioning", "artbovich", "50% 40%"),
-      detail: c("cassette-hero", "Ceiling grille removed to access the filter", "birmingham", "50% 45%"),
-      card: c("indoor-living", "Living area with discreet indoor air conditioning", "artbovich", "40% 40%"),
+      hero: c("cassette-hero", "Grille removed to reach a concealed unit's filter", "birmingham", "50% 45%"),
+      detail: own("uc-filter-dusty", "Dust-clogged filter removed for cleaning", "45% 45%"),
+      card: own("uc-tech-spray", "Technician cleaning an indoor unit", "50% 30%"),
     },
     "outdoor-condenser-cleaning": {
       hero: c("outdoor-hero", "Weathered outdoor condenser unit on a brick wall", "nikonov"),
@@ -129,53 +139,55 @@ export const images = {
     c("indoor-remote", "Checking how the air conditioner is running", "zerdzicki", "60% 50%"),
     own("uc-tech-cap", "Technician inspecting a split system", "45% 40%"),
     own("uc-filter-blue", "Filter removed for cleaning", "50% 45%"),
-    own("uc-wash-bag", "Indoor unit washed with a wash bag fitted", "50% 45%"),
+    own("uc-blue-bag-spray", "Indoor unit cleaned with a wash bag fitted", "40% 40%"),
     c("hero-2", "Clean living room with a wall-mounted split system", "badran", "50% 35%"),
   ],
   sectors: {
     residential: c("hero-2", "Modern living room with a wall-mounted split system", "badran", "50% 35%"),
-    commercial: c("hero-1", "Technician servicing a commercial indoor unit", "bulat", "60% 45%"),
+    commercial: own("uc-tech-spray", "Technician cleaning an indoor unit", "50% 35%"),
   },
   banners: {
     // Banners are very wide (about 3:1 on desktop), so every entry is a landscape
     // photo with a focal point that keeps the subject in the visible band.
-    services: own("uc-foam-coil", "Technician cleaning the coil of an indoor split system", "50% 40%"),
-    about: c("indoor-living", "Modern living area with a wall-mounted split system", "artbovich", "40% 30%"),
+    services: own("uc-wash-bag-rinse", "Technician rinsing an indoor unit's coil into a wash bag", "45% 35%"),
+    about: own("uc-filter-service", "Technician servicing a wall-mounted split system", "50% 35%"),
     faq: c("hero-3", "Clean wall-mounted split system with the louvre open", "karimov", "50% 50%"),
-    contact: c("indoor-remote", "Hand holding an air-conditioner remote", "zerdzicki", "60% 50%"),
-    book: own("uc-wash-bag", "Indoor unit wash with a wash bag fitted", "50% 45%"),
-    areas: c("hero-4", "Technician working on an outdoor unit", "lowhong", "50% 45%"),
-    residential: own("uc-pressure-wash", "Technician cleaning a split system in a home", "45% 40%"),
-    commercial: c("cassette-card", "Technician working at ceiling height in a commercial space", "lacoste", "50% 60%"),
+    contact: own("uc-filter-service", "Technician at work on an indoor unit", "45% 35%"),
+    book: own("uc-clear-bag-rinse", "Pressure rinse of an indoor coil with plastic protection", "55% 40%"),
+    residential: own("uc-blue-bag-spray", "Technician cleaning a split system in a home", "40% 40%"),
+    commercial: c("cassette-hero", "Ceiling unit grille being lowered in a commercial space", "birmingham", "50% 45%"),
   },
   about: {
     who: own("uc-tech-cap", "Technician at work on an indoor split system", "55% 45%"),
     approach: [
-      own("uc-wash-bag", "Indoor unit washed with a wash bag fitted", "50% 45%"),
+      own("uc-wash-bag-rinse", "Indoor unit coil rinsed into a wash bag", "45% 35%"),
       own("uc-filter-dusty", "Dusty filter removed from a split system", "45% 45%"),
       own("uc-tech-spray", "Technician cleaning a split system with spray and gloves", "50% 35%"),
     ],
   },
   contact: own("uc-tech-cap", "Technician working on a wall-mounted split system", "50% 40%"),
   book: own("uc-foam-coil", "Technician applying coil cleaner to an indoor unit", "40% 45%"),
-  cta: own("uc-pressure-wash", "Technician rinsing an indoor split system", "40% 40%"),
+  cta: own("uc-blue-bag-spray", "Technician cleaning an indoor unit with a wash bag fitted", "40% 40%"),
   /**
-   * Before/after pairs. Illustrative stock only — captioned as such on the page.
-   * Set `genuine: true` only when replacing with real paired job photos
-   * (same unit, same angle) supplied by the business.
+   * Before/after pairs. Shown without an "illustrative" caption (client decision).
+   * Replace with real paired job photos (same unit, same angle) before launch.
    */
   beforeAfter: [
     {
-      slug: "outdoor-condenser-cleaning",
-      title: "Outdoor condenser",
-      before: c("outdoor-hero", "Weathered outdoor condenser with grime build-up (illustrative)", "nikonov"),
-      after: c("window-card", "Clean outdoor condenser unit (illustrative)", "clow"),
+      slug: "split-system-cleaning",
+      title: "Indoor unit filter",
+      before: own("uc-filter-dusty", "Dust-clogged split system filter", "45% 45%"),
+      after: own("uc-filter-blue", "Clean split system filter", "50% 45%"),
       genuine: false,
     },
   ],
-  /** Gallery. Illustrative stock until real job photos are supplied. */
+  /** Gallery. Replace with Northline job photos before launch. */
   gallery: [
-    { image: own("uc-wash-bag", "Wash bag fitted under an indoor unit"), caption: "Indoor unit wash", genuine: false },
+    { image: own("uc-bag-wand-rinse", "Indoor coil sprayed with a wash bag fitted", "50% 45%"), caption: "Coil wash", genuine: false },
+    { image: own("uc-wash-bag-rinse", "Coil rinsed into a wash bag", "55% 40%"), caption: "Indoor unit wash", genuine: false },
+    { image: own("uc-blue-bag-spray", "Indoor unit cleaned with a wash bag fitted", "40% 40%"), caption: "Wash bag clean", genuine: false },
+    { image: own("uc-brush-coil", "Coil brushed before rinsing", "45% 40%"), caption: "Coil brushing", genuine: false },
+    { image: own("uc-wash-bag", "Wash bag fitted under an indoor unit"), caption: "Coil rinse", genuine: false },
     { image: own("uc-foam-coil", "Coil cleaner applied to an indoor unit", "40% 45%"), caption: "Coil cleaning", genuine: false },
     { image: own("uc-filter-blue", "Filter removed from a split system"), caption: "Filter removal", genuine: false },
     { image: own("uc-spray-coil", "Coil treatment on an indoor unit", "45% 45%"), caption: "Coil treatment", genuine: false },

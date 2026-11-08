@@ -60,11 +60,6 @@ export function Footer() {
               <li>
                 <Placeholder tone="dark">{site.hours}</Placeholder>
               </li>
-              <li className="pt-2">
-                <Link href="/service-areas" className={linkClass}>
-                  Check service areas →
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

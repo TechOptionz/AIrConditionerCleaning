@@ -161,6 +161,33 @@
 @utility hero-scrim {
   background: linear-gradient(100deg, rgba(10,27,46,.94) 0%, rgba(10,27,46,.72) 40%, rgba(10,27,46,.18) 100%);
 }
+/* Liquid glass card: see-through, frosted, with an edge highlight and soft sheen.
+   The light navy tint keeps white text readable over bright photos. */
+@utility liquid-glass {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 42%, rgba(255, 255, 255, 0.12) 100%),
+    rgba(10, 27, 46, 0.34);
+  -webkit-backdrop-filter: blur(16px) saturate(1.7);
+  backdrop-filter: blur(16px) saturate(1.7);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 24px rgba(255, 255, 255, 0.06),
+    0 24px 60px rgba(4, 14, 26, 0.35);
+  text-shadow: 0 1px 2px rgba(4, 14, 26, 0.25);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(120% 70% at 0% 0%, rgba(255, 255, 255, 0.28), transparent 55%);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    background: rgba(10, 27, 46, 0.78);
+  }
+}
 @utility banner-scrim {
   background: linear-gradient(100deg, rgba(10,27,46,.96) 0%, rgba(10,27,46,.84) 40%, rgba(10,27,46,.42) 100%);
 }
@@ -174,11 +201,11 @@
 }
 
 /* ---------- Keyframes ---------- */
-@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.06); } }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.025); } }
 @keyframes drift { from { transform: translate3d(-4%, 2%, 0); } to { transform: translate3d(4%, -3%, 0); } }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.animate-kenburns { animation: kenburns 14s ease-in-out infinite alternate; }
+.animate-kenburns { animation: kenburns 8s ease-in-out infinite alternate; }
 .animate-drift { animation: drift 22s ease-in-out infinite alternate; }
 .animate-spin-slow { animation: spin 1s linear infinite; }
 
@@ -200,4 +227,8 @@ select.field-select {
   background-repeat: no-repeat;
   background-position: right 14px center;
   padding-right: 40px;
+}
+/* White chevron for selects on dark or glass surfaces */
+select.field-select.field-select-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 }

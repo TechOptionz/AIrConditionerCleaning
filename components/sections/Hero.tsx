@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 const ORIGINS = ["70% 50%", "60% 40%", "50% 50%", "50% 40%"];
 
-/** Cinematic homepage hero: 4-slide Ken Burns crossfade, masked headline, glass quick form. */
+/** Cinematic homepage hero: indoor-cleaning Ken Burns crossfade, masked headline, glass quick form. */
 export function Hero() {
   const [slide, setSlide] = useState(0);
   const reduce = useReducedMotion();
@@ -33,13 +33,13 @@ export function Hero() {
       className="relative -mt-20 flex min-h-[min(92vh,860px)] items-center overflow-hidden bg-navy-900 pb-[clamp(56px,7vw,88px)] pt-[calc(80px+clamp(56px,8vw,96px))] text-white"
     >
       <HeroMedia>
-        <div className="absolute inset-x-0 -inset-y-[6%]">
+        <div className="absolute inset-0">
           {slides.map((s, i) => {
             const on = i === slide;
             return (
-              <div key={s.src} className={cn("absolute inset-0 transition-opacity duration-[1400ms] ease-out", on ? "opacity-100" : "opacity-0")} aria-hidden={!on}>
+              <div key={s.src} className={cn("absolute inset-0 transition-opacity duration-[900ms] ease-out", on ? "opacity-100" : "opacity-0")} aria-hidden={!on}>
                 <div className={cn("absolute inset-0", !reduce && "animate-kenburns")} style={{ transformOrigin: ORIGINS[i % ORIGINS.length], animationPlayState: on ? "running" : "paused" }}>
-                  <Image src={s.src} alt="" fill priority={i === 0} loading={i === 0 ? "eager" : "lazy"} sizes="100vw" quality={70} className="object-cover" style={{ objectPosition: s.focal ?? ORIGINS[i % ORIGINS.length] }} />
+                  <Image src={s.src} alt="" fill priority={i === 0} loading={i === 0 ? "eager" : "lazy"} sizes="100vw" quality={82} className="object-cover" style={{ objectPosition: s.focal ?? ORIGINS[i % ORIGINS.length] }} />
                 </div>
               </div>
             );

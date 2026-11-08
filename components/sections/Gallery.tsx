@@ -7,12 +7,11 @@ import { gallerySection } from "@/content/home";
 import { images } from "@/content/images";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
-import { cn } from "@/lib/utils";
 
 /**
- * Recent work gallery: a scroll-snap carousel with arrow controls. Items are
- * illustrative stock until the business supplies real job photos (set
- * `genuine: true` in content/images.ts to drop the caption).
+ * Work gallery: a scroll-snap carousel with arrow controls. No source or
+ * "illustrative" captions are shown (client decision). Replace the photos
+ * with Northline job photos in content/images.ts before launch.
  */
 export function Gallery() {
   const track = useRef<HTMLUListElement>(null);
@@ -44,8 +43,6 @@ export function Gallery() {
     el.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
-  const allIllustrative = images.gallery.every((g) => !g.genuine);
-
   return (
     <section aria-labelledby="h-gallery" className="section-y overflow-hidden">
       <div className="container-site">
@@ -53,7 +50,7 @@ export function Gallery() {
           id="h-gallery"
           eyebrow={gallerySection.eyebrow}
           title={gallerySection.title}
-          lead={allIllustrative ? gallerySection.lead : undefined}
+          lead={gallerySection.lead}
           action={
             <div className="flex gap-2">
               <button type="button" aria-label="Previous photos" onClick={() => scroll(-1)} disabled={!canPrev} className="grid size-11 cursor-pointer place-items-center rounded-full border border-line bg-white text-ink transition-colors hover:bg-cream-100 disabled:cursor-default disabled:opacity-40">
@@ -78,7 +75,6 @@ export function Gallery() {
               <Image src={g.image.src} alt={g.image.alt} fill sizes="(max-width: 640px) 78vw, 380px" className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" style={{ objectPosition: g.image.focal }} />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-b from-transparent to-navy-950/70 p-4 pt-10 text-white">
                 <p className="m-0 text-[14.5px] font-semibold">{g.caption}</p>
-                {!g.genuine && <p className={cn("m-0 mt-0.5 text-[12px] text-white/75")}>Illustrative stock image</p>}
               </div>
             </li>
           ))}

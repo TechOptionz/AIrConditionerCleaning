@@ -7,7 +7,7 @@ export const hero = {
   primaryCta: { label: "Book an AC Clean", href: "/book" },
   secondaryCta: { label: "Explore Our Services", href: "/services" },
   trustLine: ["Clear service options", "Residential & commercial enquiries", "Straightforward booking requests"],
-  slideIntervalMs: 6000,
+  slideIntervalMs: 3500,
 };
 
 export const quickForm = {
@@ -72,15 +72,15 @@ export const whyUs = {
 };
 
 export const gallerySection = {
-  eyebrow: "Recent work",
+  eyebrow: "Inside the clean",
   title: "A closer look at the work",
-  lead: "Photos from genuine Northline Air Care jobs will be published here once supplied by the business. The images below are illustrative stock photography.",
+  lead: "Wash bags, coil cleaning and filter care: the indoor work our service is built around.",
 };
 
 export const beforeAfterSection = {
   eyebrow: "Before and after",
   title: "What a clean can look like",
-  lead: "Drag to compare. Illustrative until real paired job photos are supplied.",
+  lead: "Drag to compare a dusty filter with a clean one.",
 };
 
 export const signsSection = {
@@ -95,13 +95,6 @@ export const signsSection = {
     { icon: Droplets, title: "Water dripping where it shouldn't", body: "Stop using the affected unit when appropriate and seek qualified advice; leaks may need more than cleaning." },
     { icon: Clock, title: "It's been a while", body: "If you can't remember the last service, check your manufacturer's care schedule and discuss next steps." },
   ] satisfies Feature[],
-};
-
-export const areasSection = {
-  eyebrow: "Areas we serve",
-  title: "Local air-conditioning care where you need it",
-  lead: "Our availability depends on the suburb and type of service. Check your postcode or contact the team to confirm coverage.",
-  cta: { label: "Check My Area", href: "/service-areas" },
 };
 
 export const faqSection = {

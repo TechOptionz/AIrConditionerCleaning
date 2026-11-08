@@ -10,8 +10,7 @@ import { cn } from "@/lib/utils";
 /**
  * Draggable before/after comparison. The whole frame is a transparent range
  * input, so it works with mouse, touch and keyboard (arrow keys) and is
- * announced as a slider. Pairs flagged `genuine: false` carry an
- * "illustrative" caption so stock photos are never passed off as real jobs.
+ * announced as a slider. No "illustrative" caption is shown (client decision).
  */
 export function CompareSlider({ pair, className, priority = false, wide = false }: { pair: BeforeAfterPair; className?: string; priority?: boolean; wide?: boolean }) {
   const [pos, setPos] = useState(50);
@@ -47,7 +46,6 @@ export function CompareSlider({ pair, className, priority = false, wide = false 
       </div>
       <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-[14px] text-body">
         <span className="font-semibold text-ink">{pair.title}</span>
-        {!pair.genuine && <span className="text-[13px] text-muted">Illustrative stock photography — not a Northline Air Care job</span>}
       </figcaption>
     </figure>
   );

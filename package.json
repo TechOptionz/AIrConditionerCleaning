@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "images:download": "node scripts/download-images.mjs"
+    "images:download": "node scripts/download-images.mjs",
+    "images:import": "node scripts/import-photos.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.3",

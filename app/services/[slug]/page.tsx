@@ -94,7 +94,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
       {pair && (
         <section aria-labelledby="h-ba" className="pb-[clamp(64px,8vw,96px)]">
           <div className="container-site">
-            <SectionHeading id="h-ba" eyebrow="Before and after" title={`What a ${svc.unit} clean can look like`} lead="Drag to compare. Illustrative until real job photos for this unit type are supplied." className="mb-[clamp(28px,4vw,40px)]" />
+            <SectionHeading id="h-ba" eyebrow="Before and after" title={`What a ${svc.unit} clean can look like`} lead="Drag to compare." className="mb-[clamp(28px,4vw,40px)]" />
             <Reveal>
               <CompareSlider pair={pair} className="mx-auto max-w-[980px]" />
             </Reveal>
