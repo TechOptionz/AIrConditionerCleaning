@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="border-top:1px solid #E2DFD8">
+  <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
+    <div style="border-bottom:1px solid #E2DFD8">
+      <h3 style="margin:0">
+        <button type="button" aria-expanded="{{ r.open }}" onClick="{{ r.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;padding:18px 0;background:none;border:0;cursor:pointer;text-align:left;font:600 17px/1.35 'DM Sans',sans-serif;color:#10233B" style-hover="color:#137C8B" style-focus="outline:2px solid #137C8B;outline-offset:2px;border-radius:6px">
+          <span>{{ r.q }}</span>
+          <span style="flex:none;width:30px;height:30px;border-radius:50%;border:1px solid #E2DFD8;display:grid;place-items:center;transition:transform .2s ease,color .2s ease,border-color .2s ease;transform:rotate({{ r.rot }}deg);color:{{ r.color }};border-color:{{ r.border }}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+          </span>
+        </button>
+      </h3>
+      <div role="region" style="display:grid;grid-template-rows:{{ r.rows }};transition:grid-template-rows .25s cubic-bezier(.22,1,.36,1)">
+        <div style="overflow:hidden">
+          <p style="margin:0 0 22px;max-width:65ch;color:#3F4753;font:400 16px/1.6 'DM Sans',sans-serif">{{ r.a }}</p>
+        </div>
+      </div>
+    </div>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;880px&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;default&quot;:[],&quot;tsType&quot;:&quot;{q:string;a:string}[]&quot;}}">
+class Component extends DCLogic {
+  state = { open: 0 };
+  renderVals() {
+    const items = this.props.items ?? [];
+    const open = this.state.open;
+    return {
+      rows: items.map((it, i) => ({
+        q: it.q, a: it.a, open: open === i,
+        rows: open === i ? '1fr' : '0fr', rot: open === i ? 45 : 0,
+        color: open === i ? '#137C8B' : '#646D79', border: open === i ? '#137C8B' : '#E2DFD8',
+        toggle: () => this.setState({ open: open === i ? -1 : i })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

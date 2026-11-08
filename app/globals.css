@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Northline Air Care design tokens — Deep Navy · Teal · Warm White
+   Source: design-reference/Northline Air Care.dc.html (approved Claude Design)
+   --------------------------------------------------------------------------- */
+@theme {
+  /* Brand */
+  --color-navy-950: #0a1b2e;   /* footer */
+  --color-navy-900: #0f2238;   /* dark sections, hero base */
+  --color-navy-800: #10233b;   /* headings / ink */
+  --color-navy-700: #15304f;   /* secondary buttons */
+  --color-teal-700: #0f6a77;   /* primary hover */
+  --color-teal-600: #137c8b;   /* primary */
+  --color-teal-300: #8ed1da;   /* eyebrows on dark */
+  --color-teal-100: #c9e5e8;   /* card hover border */
+  --color-teal-50:  #e8f4f5;   /* tints */
+  /* Warm neutrals */
+  --color-cream-50:  #faf8f4;  /* page background */
+  --color-cream-100: #f2efe9;  /* alternate surface */
+  --color-cream-200: #ece9e2;
+  --color-line:      #e2dfd8;  /* borders */
+  --color-line-strong: #cfcbc2;/* input borders */
+  --color-ink:       #10233b;
+  --color-body:      #3f4753;
+  --color-muted:     #646d79;
+  --color-faint:     #8a929d;
+  --color-danger:    #c8382e;
+  --color-warn-bg:   #fff6e5;
+  --color-warn-line: #f3d9a4;
+  --color-warn-ink:  #7a5300;
+
+  /* Type */
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-3xl: 28px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-hover: 0 12px 28px rgba(16, 24, 40, 0.12);
+  --shadow-lift: 0 18px 40px rgba(16, 24, 40, 0.1);
+  --shadow-deep: 0 24px 50px rgba(16, 24, 40, 0.14);
+  --shadow-hero: 0 24px 60px rgba(5, 15, 30, 0.35);
+  --shadow-primary: 0 10px 24px rgba(19, 124, 139, 0.25);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Breakpoints (design blueprint) */
+  --breakpoint-xs: 25rem;    /* 400 */
+  --breakpoint-sm: 40rem;    /* 640 */
+  --breakpoint-md: 48rem;    /* 768 */
+  --breakpoint-lg: 64rem;    /* 1024 */
+  --breakpoint-xl: 80rem;    /* 1280 */
+  --breakpoint-2xl: 90rem;   /* 1440 */
+
+  --container-site: 1240px;
+  --container-narrow: 880px;
+}
+
+/* ---------- Base (layered so Tailwind utilities always win) ---------- */
+@layer base {
+  html {
+    scroll-padding-top: 88px;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-cream-50);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  * { box-sizing: border-box; min-width: 0; }
+  input, select, textarea, button { font-family: inherit; }
+  input::placeholder, textarea::placeholder { color: var(--color-faint); }
+  a { color: var(--color-teal-600); }
+  a:hover { color: var(--color-teal-700); }
+
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-teal-600);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+}
+
+/* ---------- Utilities used across sections ---------- */
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 32px);
+}
+@utility container-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 32px);
+}
+@utility section-y {
+  padding-block: clamp(64px, 8vw, 96px);
+}
+@utility section-y-lg {
+  padding-block: clamp(64px, 8vw, 104px);
+}
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+@utility display-1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+@utility display-2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.875rem, 1.35rem + 2vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+@utility display-3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+@utility lead {
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  line-height: 1.55;
+}
+@utility dark-glow-left {
+  background: var(--color-navy-900) radial-gradient(900px 600px at 0% 100%, rgba(19,124,139,.28), transparent 60%);
+}
+@utility dark-glow-right {
+  background: var(--color-navy-900) radial-gradient(900px 600px at 100% 0%, rgba(19,124,139,.28), transparent 60%);
+}
+@utility hero-scrim {
+  background: linear-gradient(100deg, rgba(10,27,46,.94) 0%, rgba(10,27,46,.72) 40%, rgba(10,27,46,.18) 100%);
+}
+@utility banner-scrim {
+  background: linear-gradient(100deg, rgba(10,27,46,.96) 0%, rgba(10,27,46,.84) 40%, rgba(10,27,46,.42) 100%);
+}
+@utility mono-placeholder {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  background: var(--color-cream-100);
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: var(--color-muted);
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.06); } }
+@keyframes drift { from { transform: translate3d(-4%, 2%, 0); } to { transform: translate3d(4%, -3%, 0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.animate-kenburns { animation: kenburns 14s ease-in-out infinite alternate; }
+.animate-drift { animation: drift 22s ease-in-out infinite alternate; }
+.animate-spin-slow { animation: spin 1s linear infinite; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-kenburns, .animate-drift { animation: none !important; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Native select chevron */
+select.field-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23646D79' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
