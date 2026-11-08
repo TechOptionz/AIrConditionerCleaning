@@ -161,13 +161,6 @@ export const images = {
       after: c("window-card", "Clean outdoor condenser unit (illustrative)", "clow"),
       genuine: false,
     },
-    {
-      slug: "split-system-cleaning",
-      title: "Indoor split system",
-      before: c("portable-hero", "Aged air-conditioning units with visible dust (illustrative)", "illia"),
-      after: c("hero-3", "Clean wall-mounted split system with louvre open (illustrative)", "karimov"),
-      genuine: false,
-    },
   ],
   /** Gallery. Illustrative stock until real job photos are supplied. */
   gallery: [

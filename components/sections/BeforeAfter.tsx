@@ -13,15 +13,15 @@ import { cn } from "@/lib/utils";
  * announced as a slider. Pairs flagged `genuine: false` carry an
  * "illustrative" caption so stock photos are never passed off as real jobs.
  */
-export function CompareSlider({ pair, className, priority = false }: { pair: BeforeAfterPair; className?: string; priority?: boolean }) {
+export function CompareSlider({ pair, className, priority = false, wide = false }: { pair: BeforeAfterPair; className?: string; priority?: boolean; wide?: boolean }) {
   const [pos, setPos] = useState(50);
   const id = useId();
   return (
     <figure className={cn("m-0", className)}>
-      <div className="relative aspect-[3/2] select-none overflow-hidden rounded-xl bg-navy-900 shadow-card">
-        <Image src={pair.after.src} alt={pair.after.alt} fill sizes="(max-width: 1024px) 100vw, 600px" priority={priority} className="object-cover" draggable={false} />
+      <div className={cn("relative select-none overflow-hidden rounded-xl bg-navy-900 shadow-card", wide ? "aspect-[16/9] max-h-[min(70vh,640px)] w-full rounded-2xl" : "aspect-[3/2]")}>
+        <Image src={pair.after.src} alt={pair.after.alt} fill sizes={wide ? "(max-width: 1280px) 100vw, 1200px" : "(max-width: 1024px) 100vw, 600px"} priority={priority} className="object-cover" draggable={false} />
         <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-          <Image src={pair.before.src} alt={pair.before.alt} fill sizes="(max-width: 1024px) 100vw, 600px" priority={priority} className="object-cover grayscale-[.35]" draggable={false} />
+          <Image src={pair.before.src} alt={pair.before.alt} fill sizes={wide ? "(max-width: 1280px) 100vw, 1200px" : "(max-width: 1024px) 100vw, 600px"} priority={priority} className="object-cover grayscale-[.35]" draggable={false} />
         </div>
         <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-navy-900/80 px-3 py-2 text-[12px] font-semibold uppercase leading-none tracking-[.14em] text-white backdrop-blur">Before</span>
         <span className="pointer-events-none absolute right-4 top-4 rounded-full bg-teal-600/90 px-3 py-2 text-[12px] font-semibold uppercase leading-none tracking-[.14em] text-white">After</span>
@@ -58,7 +58,7 @@ export function BeforeAfterGrid({ pairs }: { pairs: BeforeAfterPair[] }) {
     <div className={cn("grid gap-6", pairs.length > 1 && "lg:grid-cols-2")}>
       {pairs.map((p, i) => (
         <Reveal key={p.slug + p.title} index={i}>
-          <CompareSlider pair={p} />
+          <CompareSlider pair={p} wide={pairs.length === 1} priority={i === 0} />
         </Reveal>
       ))}
     </div>
