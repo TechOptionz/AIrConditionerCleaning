@@ -3,26 +3,27 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "navy" | "outline-light" | "outline" | "ghost" | "tint" | "white";
+type Variant = "primary" | "navy" | "outline" | "outline-light" | "ghost" | "tint" | "white" | "link";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold leading-none transition-[background-color,color,border-color,transform,box-shadow,gap] duration-250 ease-out cursor-pointer disabled:opacity-50 disabled:pointer-events-none select-none";
+  "group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold leading-none transition-[background-color,color,border-color,box-shadow,transform] duration-200 ease-out cursor-pointer select-none disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-teal-600 text-white hover:bg-teal-700 hover:-translate-y-px hover:shadow-primary active:translate-y-0",
-  navy: "bg-navy-700 text-white hover:bg-navy-800 hover:-translate-y-px active:translate-y-0",
-  "outline-light": "border-[1.5px] border-white/55 text-white hover:bg-white/10 hover:border-white",
-  outline: "border-[1.5px] border-line text-ink bg-transparent hover:bg-cream-100",
-  ghost: "text-ink hover:bg-cream-100",
-  tint: "bg-teal-50 text-teal-700 hover:bg-teal-100",
-  white: "bg-white text-ink border border-line hover:bg-cream-100",
+  primary: "bg-action text-white shadow-cta hover:bg-action-hover active:bg-action-active hover:shadow-primary",
+  navy: "bg-navy-900 text-white hover:bg-navy-800 active:bg-navy-950",
+  outline: "border border-line-strong bg-white text-ink hover:border-blue-600 hover:text-blue-700",
+  "outline-light": "border border-white/55 text-white hover:border-white hover:bg-white/10",
+  ghost: "text-ink hover:bg-sky-50",
+  tint: "bg-blue-50 text-blue-800 hover:bg-blue-100 hover:text-blue-900",
+  white: "bg-white text-ink shadow-card hover:bg-sky-50",
+  link: "h-auto rounded-none px-0 text-blue-700 hover:text-blue-800",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-11 px-4 text-[14px]",
+  sm: "h-10 px-4 text-[14px]",
   md: "h-12 px-5 text-[15px]",
-  lg: "h-14 px-[26px] text-[16px]",
+  lg: "h-[52px] px-6 text-[15.5px]",
 };
 
 type CommonProps = {
@@ -41,12 +42,12 @@ export type ButtonProps = ButtonAsLink | ButtonAsButton;
 
 export function Button(props: ButtonProps) {
   const { variant = "primary", size = "md", arrow, icon, className, children, ...rest } = props;
-  const classes = cn(base, variants[variant], sizes[size], arrow && "hover:gap-3.5", className);
+  const classes = cn(base, variants[variant], variant === "link" ? "" : sizes[size], className);
   const content = (
     <>
       {icon}
       {children}
-      {arrow && <ArrowRight className="size-4 shrink-0 transition-transform duration-250 ease-out group-hover:translate-x-0.5" aria-hidden="true" />}
+      {arrow && <ArrowRight className="size-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1" aria-hidden="true" />}
     </>
   );
   if ("href" in rest && rest.href) {
@@ -70,5 +71,16 @@ export function Button(props: ButtonProps) {
     <button type={type} className={classes} {...buttonRest}>
       {content}
     </button>
+  );
+}
+
+/** Inline text link with an animated arrow — used for "View all" style actions. */
+export function ArrowLink({ href, children, className, tone = "blue" }: { href: string; children: ReactNode; className?: string; tone?: "blue" | "ink" | "light" }) {
+  const color = tone === "light" ? "text-white hover:text-blue-300" : tone === "ink" ? "text-ink hover:text-blue-700" : "text-blue-700 hover:text-blue-800";
+  return (
+    <Link href={href} className={cn("group inline-flex items-center gap-1.5 text-[14.5px] font-semibold leading-none no-underline transition-colors", color, className)}>
+      {children}
+      <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" aria-hidden="true" />
+    </Link>
   );
 }

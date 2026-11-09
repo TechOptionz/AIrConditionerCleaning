@@ -47,9 +47,9 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <motion.div role="status" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex min-h-[420px] flex-col justify-center rounded-2xl border border-line bg-white p-[clamp(24px,3vw,36px)]">
-        <span className="grid size-14 place-items-center rounded-full bg-teal-50">
-          <Check className="size-6 text-teal-600" strokeWidth={2.4} aria-hidden="true" />
+      <motion.div role="status" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex min-h-[420px] flex-col justify-center rounded-lg border border-line bg-white p-[clamp(24px,3vw,36px)] shadow-card">
+        <span className="grid size-14 place-items-center rounded-md bg-blue-600 text-white">
+          <Check className="size-6" strokeWidth={2.6} aria-hidden="true" />
         </span>
         <h2 className="mt-5 font-display text-[clamp(1.5rem,1.3rem+1vw,2rem)] font-extrabold text-ink">{contactPage.successTitle}</h2>
         <p className="mt-2.5 leading-[1.6] text-body">{contactPage.successBody}</p>
@@ -61,7 +61,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate aria-labelledby="ct-h" className="rounded-2xl border border-line bg-white p-[clamp(24px,3vw,36px)]">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate aria-labelledby="ct-h" className="rounded-lg border border-line bg-white p-[clamp(24px,3vw,36px)] shadow-card">
       <h2 id="ct-h" className="font-display text-[clamp(1.5rem,1.3rem+1vw,2rem)] font-extrabold tracking-[-.015em] text-ink">
         {contactPage.formTitle}
       </h2>
@@ -77,7 +77,7 @@ export function ContactForm() {
           label={
             <>
               I acknowledge the{" "}
-              <Link href="/privacy" className="text-teal-600">
+              <Link href="/privacy" className="text-blue-700">
                 privacy policy
               </Link>{" "}
               and consent to being contacted about this enquiry.
@@ -102,7 +102,7 @@ export function ContactForm() {
             </DevNotice>
           )}
           {(status === "failed" || status === "spam") && (
-            <p role="alert" className="rounded-[10px] border border-danger/30 bg-danger/5 px-3.5 py-3 text-[14px] leading-[1.5] text-danger">
+            <p role="alert" className="rounded-md border border-danger/30 bg-danger/5 px-3.5 py-3 text-[14px] leading-[1.5] text-danger">
               <strong>{contactPage.errorTitle}</strong> {contactPage.errorBody}{" "}
               <a href={telHref(site.phone)} className="font-semibold">
                 {site.phone}

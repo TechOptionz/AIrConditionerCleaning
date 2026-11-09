@@ -1,10 +1,11 @@
 "use client";
 
 import { forwardRef, useId, type ComponentPropsWithoutRef, type ReactNode } from "react";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const fieldClass =
-  "h-12 w-full rounded-sm border border-line-strong bg-white px-3.5 text-[16px] text-ink outline-none transition-[border-color,box-shadow] duration-150 focus:border-teal-600 focus:shadow-[0_0_0_3px_rgba(19,124,139,.15)] aria-[invalid=true]:border-danger";
+  "h-12 w-full rounded-md border border-line-strong bg-white px-3.5 text-[16px] text-ink outline-none transition-[border-color,box-shadow] duration-150 hover:border-blue-300 focus:border-blue-600 focus:shadow-[0_0_0_3px_rgba(0,102,204,.18)] aria-[invalid=true]:border-danger";
 
 export const textareaClass = cn(fieldClass, "h-auto min-h-[112px] resize-y py-3 leading-[1.5]");
 
@@ -24,13 +25,15 @@ export function FieldWrap({ label, required, error, hint, className, children }:
   const hintId = `${id}-hint`;
   const describedBy = [error ? errId : null, hint ? hintId : null].filter(Boolean).join(" ") || undefined;
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
-      <label htmlFor={id} className="text-[13px] font-semibold leading-none text-ink">
+    <div className={cn("flex flex-col gap-2", className)}>
+      <label htmlFor={id} className="text-[13.5px] font-semibold leading-none text-ink">
         {label}
         {required && (
           <>
             {" "}
-            <span aria-hidden="true">*</span>
+            <span aria-hidden="true" className="text-blue-600">
+              *
+            </span>
           </>
         )}
       </label>
@@ -95,7 +98,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   return (
     <div className={cn("flex flex-col gap-1", wrapClassName)}>
       <label htmlFor={id} className="flex cursor-pointer items-start gap-3 text-[14px] leading-[1.5] text-body">
-        <input ref={ref} id={id} type="checkbox" aria-describedby={error ? errId : undefined} aria-invalid={error ? true : undefined} className={cn("mt-0.5 size-5 shrink-0 accent-teal-600", className)} {...rest} />
+        <input ref={ref} id={id} type="checkbox" aria-describedby={error ? errId : undefined} aria-invalid={error ? true : undefined} className={cn("mt-0.5 size-5 shrink-0 rounded-sm accent-blue-600", className)} {...rest} />
         <span>{label}</span>
       </label>
       {error && (
@@ -130,16 +133,18 @@ export function ChipGroup<T extends string>({
   const items = (options as readonly (T | { label: T; sub?: string })[]).map((o) => (typeof o === "string" ? { label: o as T, sub: undefined } : o));
   return (
     <fieldset className={cn("m-0 min-w-0 border-0 p-0", className)}>
-      <legend className="mb-2 p-0 text-[13px] font-semibold leading-none text-ink">
+      <legend className="mb-2.5 p-0 text-[13.5px] font-semibold leading-none text-ink">
         {legend}
         {required && (
           <>
             {" "}
-            <span aria-hidden="true">*</span>
+            <span aria-hidden="true" className="text-blue-600">
+              *
+            </span>
           </>
         )}
       </legend>
-      <div className={cn(variant === "pill" ? "flex flex-wrap gap-2" : "grid grid-cols-[repeat(auto-fit,minmax(min(100%,180px),1fr))] gap-2.5")}>
+      <div className={cn(variant === "pill" ? "flex flex-wrap gap-2" : "grid grid-cols-[repeat(auto-fit,minmax(min(100%,170px),1fr))] gap-2.5")}>
         {items.map((o) => {
           const on = o.label === value;
           return (
@@ -149,13 +154,18 @@ export function ChipGroup<T extends string>({
               aria-pressed={on}
               onClick={() => onChange(o.label)}
               className={cn(
-                "cursor-pointer border font-semibold transition-[background-color,color,border-color] duration-200",
-                variant === "pill" ? "h-11 rounded-full px-4 text-[14.5px] leading-none" : "min-h-16 rounded-md px-4 py-3 text-left text-[14.5px] leading-[1.3]",
-                on ? "border-teal-600 bg-teal-600 text-white" : "border-line-strong bg-white text-ink hover:border-teal-600",
+                "relative cursor-pointer border text-left font-semibold transition-[background-color,color,border-color,box-shadow] duration-200",
+                variant === "pill" ? "h-11 rounded-md px-4 text-[14.5px] leading-none" : "min-h-[64px] rounded-md px-4 py-3 pr-10 text-[14.5px] leading-[1.3]",
+                on ? "border-blue-600 bg-blue-50 text-ink shadow-[inset_0_0_0_1px_var(--color-blue-600)]" : "border-line-strong bg-white text-ink hover:border-blue-400",
               )}
             >
               <span className="block">{o.label}</span>
-              {o.sub && <span className={cn("mt-0.5 block text-[13px] font-normal", on ? "text-white/85" : "text-muted")}>{o.sub}</span>}
+              {o.sub && <span className={cn("mt-0.5 block text-[13px] font-normal", on ? "text-blue-800" : "text-muted")}>{o.sub}</span>}
+              {variant === "card" && (
+                <span className={cn("absolute right-3 top-3 grid size-5 place-items-center rounded-full border transition-colors", on ? "border-blue-600 bg-blue-600 text-white" : "border-line-strong text-transparent")} aria-hidden="true">
+                  <Check className="size-3" strokeWidth={3} />
+                </span>
+              )}
             </button>
           );
         })}

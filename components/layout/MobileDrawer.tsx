@@ -9,6 +9,7 @@ import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { cn, telHref } from "@/lib/utils";
 import { EASE_OUT } from "@/lib/motion";
+import { Logo } from "./Logo";
 
 type Props = { open: boolean; onClose: () => void; pathname: string };
 
@@ -48,6 +49,7 @@ export function MobileDrawer({ open, onClose, pathname }: Props) {
   }, [open, onClose]);
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/"));
+  const phoneOk = !site.phoneIsPlaceholder;
 
   return (
     <AnimatePresence>
@@ -57,7 +59,7 @@ export function MobileDrawer({ open, onClose, pathname }: Props) {
             type="button"
             aria-label="Close menu"
             onClick={onClose}
-            className="absolute inset-0 cursor-pointer border-0 bg-navy-900/55"
+            className="absolute inset-0 cursor-pointer border-0 bg-navy-950/55"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -68,55 +70,64 @@ export function MobileDrawer({ open, onClose, pathname }: Props) {
             role="dialog"
             aria-modal="true"
             aria-label="Site menu"
-            className="absolute bottom-0 right-0 top-0 flex w-[min(84vw,360px)] flex-col bg-white shadow-[-12px_0_40px_rgba(16,24,40,.2)]"
+            className="absolute bottom-0 right-0 top-0 flex w-[min(86vw,380px)] flex-col bg-white shadow-[-12px_0_40px_rgba(16,42,67,.18)]"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: EASE_OUT }}
           >
-            <div className="flex h-16 items-center justify-between border-b border-line pl-5 pr-3">
-              <span className="font-display text-[18px] font-bold text-ink">Menu</span>
-              <button type="button" aria-label="Close menu" onClick={onClose} className="grid size-11 cursor-pointer place-items-center rounded-md border-0 bg-transparent text-ink hover:bg-cream-100">
+            <div className="flex h-[68px] items-center justify-between border-b border-line pl-5 pr-3">
+              <Logo compact />
+              <button type="button" aria-label="Close menu" onClick={onClose} className="grid size-11 cursor-pointer place-items-center rounded-md border-0 bg-transparent text-ink hover:bg-sky-50">
                 <X className="size-[22px]" aria-hidden="true" />
               </button>
             </div>
-            <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-2 py-3">
+            <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-3 py-3">
               {drawerNav.map((n, i) => (
-                <motion.div key={n.href} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.08 + i * 0.04 }}>
+                <motion.div key={n.href} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.06 + i * 0.035 }}>
                   <Link
                     href={n.href}
                     onClick={onClose}
                     aria-current={isActive(n.href) ? "page" : undefined}
                     className={cn(
-                      "flex min-h-12 items-center justify-between rounded-md px-3.5 text-[16px] font-semibold leading-tight text-ink no-underline hover:bg-cream-100",
-                      isActive(n.href) && "bg-teal-50",
+                      "flex min-h-12 items-center justify-between rounded-md px-3.5 text-[16px] font-semibold leading-tight text-ink no-underline hover:bg-sky-50",
+                      isActive(n.href) && "bg-blue-50 text-blue-800",
                     )}
                   >
                     {n.label}
-                    <ChevronRight className="size-4 text-faint" aria-hidden="true" />
+                    <ChevronRight className={cn("size-4", isActive(n.href) ? "text-blue-600" : "text-faint")} aria-hidden="true" />
                   </Link>
                 </motion.div>
               ))}
-              <div className="mx-3.5 mb-2 mt-4 text-[11.5px] font-semibold uppercase leading-none tracking-[.16em] text-teal-600">Cleaning by system type</div>
+              <div className="mx-3.5 mb-2 mt-5 flex items-center gap-2.5 eyebrow text-blue-700">
+                <span className="h-px w-5 bg-blue-600" aria-hidden="true" />
+                Cleaning by system type
+              </div>
               {services.map((s) => (
                 <Link
                   key={s.slug}
                   href={`/services/${s.slug}`}
                   onClick={onClose}
                   aria-current={pathname === `/services/${s.slug}` ? "page" : undefined}
-                  className={cn("flex min-h-11 items-center rounded-[10px] px-3.5 text-[15px] font-medium leading-tight text-body no-underline hover:bg-cream-100 hover:text-teal-600", pathname === `/services/${s.slug}` && "bg-teal-50 text-teal-700")}
+                  className={cn("flex min-h-11 items-center rounded-md px-3.5 text-[15px] font-medium leading-tight text-body no-underline hover:bg-sky-50 hover:text-blue-700", pathname === `/services/${s.slug}` && "bg-blue-50 text-blue-800")}
                 >
                   {s.short}
                 </Link>
               ))}
             </nav>
             <div className="flex flex-col gap-2.5 border-t border-line p-4">
-              <Link href="/book" onClick={onClose} className="inline-flex h-[50px] items-center justify-center gap-2 rounded-md bg-teal-600 text-[15px] font-semibold leading-none text-white no-underline hover:bg-teal-700">
+              <Link href="/book" onClick={onClose} className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-action text-[15px] font-semibold leading-none text-white no-underline hover:bg-action-hover">
                 Request a Booking
               </Link>
-              <a href={telHref(site.phone)} className="inline-flex h-[50px] items-center justify-center gap-2 rounded-md bg-cream-100 text-[15px] font-semibold leading-none text-ink no-underline hover:bg-cream-200">
-                Call {site.phone}
-              </a>
+              {phoneOk ? (
+                <a href={telHref(site.phone)} className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-line-strong bg-white text-[15px] font-semibold leading-none text-ink no-underline hover:border-blue-600">
+                  Call {site.phone}
+                </a>
+              ) : (
+                <Link href="/contact" onClick={onClose} className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-line-strong bg-white text-[15px] font-semibold leading-none text-ink no-underline hover:border-blue-600">
+                  Contact us
+                </Link>
+              )}
             </div>
           </motion.aside>
         </div>

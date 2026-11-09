@@ -47,6 +47,12 @@ export const IMAGES = {
   "indoor-split": P("38788452"),
   "indoor-living": P("6588599"),
   "indoor-remote": P("16695385"),
+  // Service-specific units added in the redesign (resized to 1920 px on import)
+  "cassette-unit": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Hitachi_cassette_air_conditioner.jpg", // CC BY-SA 4.0, Nameless245
+  "cassette-unit-2": "https://upload.wikimedia.org/wikipedia/commons/9/92/Ceiling_air_conditioner.JPG", // CC BY-SA 4.0, Antonio Mette
+  "suspended-unit": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Daikin_ceiling_suspended_air_conditioner.jpg", // CC BY-SA 4.0, Nameless245
+  "ceiling-diffuser": P("36248286"),
+  "return-grille": P("34578854"),
 };
 
 const outDir = join(process.cwd(), "public", "images");

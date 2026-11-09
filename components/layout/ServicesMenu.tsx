@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
@@ -66,6 +67,10 @@ export function ServicesMenu({ active, onNavigate }: { active: boolean; onNaviga
     onNavigate?.();
   };
 
+  const [hovered, setHovered] = useState<string | null>(null);
+  const featured = services.find((s) => s.slug === hovered) ?? services[1];
+  const isDefault = !hovered || hovered === services[1].slug;
+
   return (
     <div ref={wrapRef} className="relative" onMouseEnter={enter} onMouseLeave={leave}>
       <button
@@ -82,15 +87,15 @@ export function ServicesMenu({ active, onNavigate }: { active: boolean; onNaviga
           }
         }}
         className={cn(
-          "relative inline-flex h-10 cursor-pointer items-center gap-[5px] rounded-sm border-0 bg-transparent px-[11px] text-[14.5px] font-medium leading-none text-inherit whitespace-nowrap transition-colors duration-200 hover:text-teal-600",
-          open && "text-teal-600",
+          "group relative inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-sm border-0 bg-transparent px-3 text-[14.5px] font-medium leading-none whitespace-nowrap transition-colors duration-200 hover:text-blue-700",
+          open || active ? "text-blue-700" : "text-ink",
         )}
       >
         Services
         <ChevronDown className={cn("size-3.5 transition-transform duration-200", open && "rotate-180")} aria-hidden="true" />
         <span
           aria-hidden="true"
-          className={cn("absolute bottom-1 left-[11px] right-[11px] h-0.5 origin-left bg-teal-600 transition-transform duration-200", active ? "scale-x-100" : "scale-x-0")}
+          className={cn("absolute bottom-0.5 left-3 right-3 h-0.5 origin-left bg-blue-600 transition-transform duration-250 ease-out group-hover:scale-x-100", active ? "scale-x-100" : "scale-x-0")}
         />
       </button>
 
@@ -99,36 +104,55 @@ export function ServicesMenu({ active, onNavigate }: { active: boolean; onNaviga
           <motion.div
             id={id}
             ref={panelRef}
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
+            exit={{ opacity: 0, y: 6 }}
             transition={{ duration: 0.18, ease: EASE_OUT }}
-            className="absolute left-0 top-[calc(100%+8px)] grid w-[min(720px,calc(100vw-48px))] grid-cols-3 gap-4 rounded-lg border border-line bg-white p-5 text-ink shadow-hover"
+            className="absolute left-1/2 top-[calc(100%+10px)] grid w-[min(760px,calc(100vw-48px))] -translate-x-1/2 grid-cols-[1.4fr_1fr] overflow-hidden rounded-lg border border-line bg-white text-ink shadow-lift"
+            onAnimationComplete={() => { if (!open) setHovered(null); }}
           >
-            <div className="col-span-2 grid grid-cols-2 gap-x-4 gap-y-1">
-              <div className="col-span-2 mb-2 mt-1 text-[11.5px] font-semibold uppercase leading-none tracking-[.16em] text-teal-600">Cleaning by system type</div>
+            <span className="absolute inset-x-0 top-0 h-0.5 bg-blue-600" aria-hidden="true" />
+            <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 p-5 pt-6">
+              <div className="col-span-2 mb-2 eyebrow text-blue-700">Cleaning by system type</div>
               {services.map((s) => (
                 <Link
                   key={s.slug}
                   href={`/services/${s.slug}`}
                   onClick={handleNav}
-                  className="flex h-11 items-center gap-2.5 rounded-[10px] px-2.5 text-[14px] font-medium leading-tight text-ink no-underline transition-colors hover:bg-cream-100 hover:text-teal-600 focus-visible:bg-cream-100"
+                  onMouseEnter={() => setHovered(s.slug)}
+                  onFocus={() => setHovered(s.slug)}
+                  className="group/item flex h-11 items-center gap-2.5 rounded-md px-2.5 text-[14px] font-medium leading-tight text-ink no-underline transition-colors hover:bg-sky-50 hover:text-blue-700 focus-visible:bg-sky-50"
                 >
-                  <span className="size-2 shrink-0 rounded-full bg-teal-100" aria-hidden="true" />
+                  <span className="size-1.5 shrink-0 bg-blue-200 transition-colors group-hover/item:bg-blue-600" aria-hidden="true" />
                   {s.short}
                 </Link>
               ))}
-            </div>
-            <div className="flex flex-col gap-2 rounded-md bg-cream-100 p-4">
-              <div className="my-1 text-[11.5px] font-semibold uppercase leading-none tracking-[.16em] text-teal-600">Not sure?</div>
-              <p className="m-0 text-[13.5px] leading-[1.5] text-body">Tell us what you can see and we&apos;ll help identify the next step.</p>
-              <Link href="/book" onClick={handleNav} className="mt-auto pt-2 text-[13.5px] font-semibold leading-snug text-teal-600 no-underline hover:underline">
-                Help me choose →
-              </Link>
-              <Link href="/services" onClick={handleNav} className="text-[13.5px] font-semibold leading-snug text-ink no-underline hover:underline">
-                View all services →
+              <Link href="/services" onClick={handleNav} className="group/all col-span-2 mt-3 inline-flex items-center gap-1.5 px-2.5 text-[14px] font-semibold text-blue-700 no-underline hover:text-blue-800">
+                View all services
+                <ArrowRight className="size-4 transition-transform group-hover/all:translate-x-1" aria-hidden="true" />
               </Link>
             </div>
+            <Link href={`/services/${featured.slug}`} onClick={handleNav} className="group/feat relative flex flex-col justify-end overflow-hidden bg-navy-900 p-5 text-white no-underline">
+              <AnimatePresence initial={false}>
+                <motion.span
+                  key={featured.slug}
+                  className="absolute inset-0"
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.35, ease: EASE_OUT }}
+                >
+                  <Image src={featured.images.card.src} alt="" fill sizes="300px" className="object-cover opacity-80" style={{ objectPosition: featured.images.card.focal }} />
+                </motion.span>
+              </AnimatePresence>
+              <span className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/40 to-transparent" aria-hidden="true" />
+              <span className="absolute left-5 top-5 h-px w-8 bg-blue-300" aria-hidden="true" />
+              <span className="relative eyebrow text-blue-300">{isDefault ? "Popular" : "Selected"}</span>
+              <motion.span key={featured.slug + "-t"} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25, ease: EASE_OUT }} className="relative block">
+                <span className="mt-2 block font-display text-[17px] font-bold leading-tight">{featured.short}</span>
+                <span className="mt-1 block text-[13px] leading-snug text-white/75">{featured.summary}</span>
+              </motion.span>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

@@ -13,7 +13,8 @@ type PageMeta = {
 /** Builds consistent per-route metadata with canonical + Open Graph + Twitter. */
 export function pageMetadata({ title, description, path, image, noIndex }: PageMeta): Metadata {
   const url = new URL(path, site.url).toString();
-  const ogImage = image ?? "/images/hero-2.jpg";
+  // Default share image must be landscape: hero-3 is 2200×1467 (3:2).
+  const ogImage = image ?? "/images/hero-3.jpg";
   return {
     title,
     description,
@@ -26,7 +27,8 @@ export function pageMetadata({ title, description, path, image, noIndex }: PageM
       siteName: site.name,
       locale: "en_AU",
       type: "website",
-      images: [{ url: ogImage, width: 1920, height: 1280, alt: site.name }],
+      // Dimensions describe the default image only; omit them for custom images.
+      images: [image ? { url: ogImage, alt: site.name } : { url: ogImage, width: 2200, height: 1467, alt: site.name }],
     },
     twitter: { card: "summary_large_image", title, description, images: [ogImage] },
   };
@@ -44,8 +46,8 @@ export function organisationJsonLd() {
     name: site.name,
     url: site.url,
     description: site.description,
-    image: `${site.url}/images/hero-2.jpg`,
-    logo: `${site.url}/brand/logo-mark.svg`,
+    image: `${site.url}/images/hero-3.jpg`,
+    logo: `${site.url}/brand/logo-full.png`,
     areaServed: { "@type": "Country", name: "Australia" },
   };
   if (!site.phoneIsPlaceholder) data.telephone = site.phone;

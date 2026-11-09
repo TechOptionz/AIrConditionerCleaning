@@ -31,7 +31,7 @@ const img = (
 ): SiteImage => ({ src: `/images/${file}.jpg`, alt, credit, creditHref, orientation, focal });
 
 /** Files that are taller than wide (2:3). Everything else is landscape. */
-const PORTRAIT = new Set(["uc-tech-spray", "hero-1", "hero-2", "step-1", "about-who", "about-approach-2", "book-photo", "outdoor-detail", "under-ceiling-detail"]);
+const PORTRAIT = new Set(["uc-tech-spray", "hero-1", "hero-2", "step-1", "about-who", "about-approach-2", "book-photo", "outdoor-detail", "under-ceiling-detail", "cassette-unit-2", "return-grille"]);
 
 const CREDIT = {
   bulat: ["Photo by bulat843 on Pexels", "https://www.pexels.com/@bulat843-1243575272/"],
@@ -61,6 +61,12 @@ const CREDIT = {
   neosiam: ["Photo by NEOSiAM 18+ on Pexels", "https://www.pexels.com/@neosiam/"],
   artbovich: ["Photo by Max Vakhtbovych on Pexels", "https://www.pexels.com/@artbovich/"],
   zerdzicki: ["Photo by Jakub Zerdzicki on Pexels", "https://www.pexels.com/@jakubzerdzicki/"],
+  pexelsDiffuser: ["Photo on Pexels", "https://www.pexels.com/photo/36248286/"],
+  pexelsGrille: ["Photo on Pexels", "https://www.pexels.com/photo/34578854/"],
+  // Wikimedia Commons, CC BY-SA 4.0 — attribution is required and is rendered in the footer (see ccAttributions).
+  nameless245Cassette: ["Nameless245, Wikimedia Commons, CC BY-SA 4.0", "https://commons.wikimedia.org/w/index.php?curid=148004170"],
+  nameless245Suspended: ["Nameless245, Wikimedia Commons, CC BY-SA 4.0", "https://commons.wikimedia.org/w/index.php?curid=148004172"],
+  metteCassette: ["Antonio Mette, Wikimedia Commons, CC BY-SA 4.0", "https://commons.wikimedia.org/w/index.php?curid=48368687"],
 } as const;
 
 type CreditKey = keyof typeof CREDIT;
@@ -109,23 +115,21 @@ export const images = {
     },
     "ducted-system-cleaning": {
       hero: c("cassette-hero", "Removing a ceiling return-air grille to reach the filter", "birmingham", "50% 45%"),
-      detail: c("indoor-living", "Open-plan living area served by air conditioning", "artbovich", "60% 40%"),
+      detail: c("ceiling-diffuser", "Round ceiling supply diffuser of a ducted system", "pexelsDiffuser", "50% 50%"),
       card: own("uc-filter-dusty", "Dusty filter removed for cleaning", "45% 45%"),
     },
     "cassette-cleaning": {
-      hero: c("cassette-hero", "Ceiling unit grille being lowered to reach the filter", "birmingham", "50% 45%"),
-      detail: own("uc-filter-blue", "Gloved hands removing a filter for cleaning", "50% 45%"),
-      card: c("cassette-hero", "Ceiling unit grille being lowered", "birmingham", "50% 45%"),
+      hero: c("cassette-unit", "Four-way ceiling cassette air conditioner in a plasterboard ceiling", "nameless245Cassette", "50% 50%"),
+      detail: c("cassette-unit-2", "Ceiling cassette unit with its central intake grille", "metteCassette", "50% 45%"),
+      card: c("cassette-unit", "Ceiling cassette air conditioner", "nameless245Cassette", "50% 50%"),
     },
     "under-ceiling-cleaning": {
-      // Stopgap: no photo of a suspended under-ceiling unit is available yet. The overhead
-      // grille shot is the closest match; replace with a real under-ceiling photo when supplied.
-      hero: c("cassette-hero", "Technician working on an overhead air-conditioning unit", "birmingham", "50% 40%"),
-      detail: c("cassette-hero", "Overhead unit grille lowered to reach the filter", "birmingham", "60% 50%"),
-      card: own("uc-foam-wash", "Foam cleaner on an indoor unit coil", "60% 45%"),
+      hero: c("suspended-unit", "Under-ceiling (suspended) air conditioner mounted below a concrete slab", "nameless245Suspended", "45% 45%"),
+      detail: own("uc-foam-wash", "Foam cleaner applied to an indoor unit coil", "60% 45%"),
+      card: c("suspended-unit", "Suspended under-ceiling air conditioner", "nameless245Suspended", "45% 45%"),
     },
     "bulkhead-cleaning": {
-      hero: c("cassette-hero", "Grille removed to reach a concealed unit's filter", "birmingham", "50% 45%"),
+      hero: c("return-grille", "Linear return-air grille of a concealed bulkhead unit", "pexelsGrille", "50% 60%"),
       detail: own("uc-filter-dusty", "Dust-clogged filter removed for cleaning", "45% 45%"),
       card: own("uc-tech-spray", "Technician cleaning an indoor unit", "50% 30%"),
     },
@@ -155,10 +159,16 @@ export const images = {
     contact: own("uc-filter-service", "Technician at work on an indoor unit", "45% 35%"),
     book: own("uc-clear-bag-rinse", "Pressure rinse of an indoor coil with plastic protection", "55% 40%"),
     residential: own("uc-blue-bag-spray", "Technician cleaning a split system in a home", "40% 40%"),
-    commercial: c("cassette-hero", "Ceiling unit grille being lowered in a commercial space", "birmingham", "50% 45%"),
+    commercial: c("cassette-unit", "Ceiling cassette air conditioner in a commercial space", "nameless245Cassette", "50% 50%"),
+  },
+  /** Homepage hero and about split: large landscape photo + small overlapping detail. */
+  home: {
+    hero: own("uc-filter-service", "Technician removing the filters from a wall-mounted split system", "62% 35%"),
+    about: own("uc-wash-bag-rinse-hero", "Technician rinsing an indoor unit's coil into a wash bag", "60% 45%"),
+    aboutDetail: own("uc-tech-cap", "Technician opening the front panel of a split system", "45% 40%"),
   },
   about: {
-    who: own("uc-tech-cap", "Technician at work on an indoor split system", "55% 45%"),
+    who: own("uc-blue-bag-spray", "Technician cleaning a split system with a wash bag fitted", "40% 40%"),
     approach: [
       own("uc-wash-bag-rinse", "Indoor unit coil rinsed into a wash bag", "45% 35%"),
       own("uc-filter-dusty", "Dusty filter removed from a split system", "45% 45%"),
@@ -197,3 +207,13 @@ export const images = {
 };
 
 export type BeforeAfterPair = (typeof images.beforeAfter)[number];
+
+/**
+ * Creative Commons photos require visible attribution (unlike Pexels/Unsplash/own photos).
+ * Rendered as a small credits line in the footer.
+ */
+export const ccAttributions: { title: string; author: string; licence: string; href: string }[] = [
+  { title: "Ceiling cassette air conditioner", author: "Nameless245", licence: "CC BY-SA 4.0", href: CREDIT.nameless245Cassette[1] },
+  { title: "Ceiling cassette unit", author: "Antonio Mette", licence: "CC BY-SA 4.0", href: CREDIT.metteCassette[1] },
+  { title: "Under-ceiling air conditioner", author: "Nameless245", licence: "CC BY-SA 4.0", href: CREDIT.nameless245Suspended[1] },
+];

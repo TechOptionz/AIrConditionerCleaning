@@ -109,19 +109,19 @@ export function BookingForm() {
   const panel = "animate-in";
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="min-w-0 rounded-2xl border border-line bg-white p-[clamp(20px,3vw,40px)]">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="min-w-0 rounded-lg border border-line bg-white p-[clamp(20px,3vw,36px)] shadow-card">
       {/* Progress */}
       <ol aria-label="Progress" className="m-0 mb-7 grid list-none grid-cols-3 gap-2 p-0">
         {bookingPage.steps.map((label, i) => {
           const done = i < step;
           const cur = i === step;
-          const bar = done ? "bg-navy-700" : cur ? "bg-teal-600" : "bg-line";
+          const bar = done ? "bg-navy-900" : cur ? "bg-blue-600" : "bg-line";
           return (
             <li key={label} aria-current={cur ? "step" : undefined} className="flex min-w-0 flex-col gap-2.5">
               <span className={cn("h-1 rounded-full", bar)} />
               <span className={cn("flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap text-[13px] font-semibold leading-tight", cur || done ? "text-ink" : "text-faint")}>
                 <span className={cn("grid size-[22px] shrink-0 place-items-center rounded-full text-[11px] text-white", bar, !cur && !done && "text-muted")}>{i + 1}</span>
-                <span className="truncate">{label}</span>
+                <span className={cn("truncate", !cur && "max-sm:hidden")}>{label}</span>
               </span>
             </li>
           );
@@ -131,7 +131,7 @@ export function BookingForm() {
       <AnimatePresence mode="wait" initial={false}>
         {step === 0 && (
           <motion.div key="s1" className={panel} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-            <h2 className="display-3 text-ink">{bookingPage.steps[0]}</h2>
+            <h2 className="display-3 border-b border-line pb-4 text-ink">{bookingPage.steps[0]}</h2>
             <ChipGroup legend="Premises" required options={premisesOptions} value={values.premises} onChange={(v) => setValue("premises", v, { shouldValidate: true })} className="mt-6" />
             <div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] gap-4">
               <Select label="Unit type" required error={errors.unitType?.message} {...register("unitType")}>
@@ -156,7 +156,7 @@ export function BookingForm() {
 
         {step === 1 && (
           <motion.div key="s2" className={panel} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-            <h2 className="display-3 text-ink">{bookingPage.steps[1]}</h2>
+            <h2 className="display-3 border-b border-line pb-4 text-ink">{bookingPage.steps[1]}</h2>
             <div className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] gap-4">
               <Input label="Street address" autoComplete="street-address" wrapClassName="col-span-full" error={errors.address?.message} {...register("address")} />
               <Input label="Suburb" required autoComplete="address-level2" error={errors.suburb?.message} {...register("suburb")} />
@@ -170,7 +170,7 @@ export function BookingForm() {
 
         {step === 2 && (
           <motion.div key="s3" className={panel} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-            <h2 className="display-3 text-ink">{bookingPage.steps[2]}</h2>
+            <h2 className="display-3 border-b border-line pb-4 text-ink">{bookingPage.steps[2]}</h2>
             <div className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] gap-4">
               <Input label="Name" required autoComplete="name" error={errors.name?.message} {...register("name")} />
               <Input label="Phone" required type="tel" inputMode="tel" autoComplete="tel" error={errors.phone?.message} {...register("phone")} />
@@ -178,10 +178,10 @@ export function BookingForm() {
               <ChipGroup legend="Preferred contact method" options={contactMethodOptions} value={values.contact} onChange={(v) => setValue("contact", v, { shouldValidate: true })} />
             </div>
 
-            <div className="mt-6 rounded-lg bg-cream-100 p-5">
+            <div className="mt-6 rounded-md border border-line bg-sky-50 p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <strong className="text-[15px] text-ink">Review your request</strong>
-                <button type="button" onClick={() => setStep(0)} className="cursor-pointer border-0 bg-transparent py-1.5 text-[14px] font-semibold leading-none text-teal-600 hover:underline">
+                <button type="button" onClick={() => setStep(0)} className="cursor-pointer border-0 bg-transparent py-1.5 text-[14px] font-semibold leading-none text-blue-700 hover:underline">
                   Edit
                 </button>
               </div>
@@ -205,7 +205,7 @@ export function BookingForm() {
               label={
                 <>
                   I acknowledge the{" "}
-                  <Link href="/privacy" className="text-teal-600">
+                  <Link href="/privacy" className="text-blue-700">
                     privacy policy
                   </Link>{" "}
                   and understand this is a booking request, not a confirmed appointment.
@@ -234,7 +234,7 @@ export function BookingForm() {
             </DevNotice>
           )}
           {status === "failed" && (
-            <p role="alert" className="rounded-[10px] border border-danger/30 bg-danger/5 px-3.5 py-3 text-[14px] leading-[1.5] text-danger">
+            <p role="alert" className="rounded-md border border-danger/30 bg-danger/5 px-3.5 py-3 text-[14px] leading-[1.5] text-danger">
               <strong>Your request wasn&apos;t sent.</strong> Please try again or call{" "}
               <a href={telHref(site.phone)} className="font-semibold">
                 {site.phone}
@@ -243,7 +243,7 @@ export function BookingForm() {
             </p>
           )}
           {status === "spam" && (
-            <p role="alert" className="rounded-[10px] border border-danger/30 bg-danger/5 px-3.5 py-3 text-[14px] leading-[1.5] text-danger">
+            <p role="alert" className="rounded-md border border-danger/30 bg-danger/5 px-3.5 py-3 text-[14px] leading-[1.5] text-danger">
               The request looked automated and was not sent. Please wait a moment and try again, or call us.
             </p>
           )}

@@ -51,3 +51,39 @@ Team photos: add `photo: SiteImage` to each member in `content/about.ts` and ren
 ## Re-downloading stock
 
 `npm run images:download` fetches any missing file listed in `scripts/download-images.mjs`.
+
+## Replacement checklist (redesign, Nov 2026)
+
+Slots that still use stock or illustrative photography and should be replaced with Northline job photos
+before launch. Swap the file in `public/images/` (same name) or edit the entry in `content/images.ts`.
+
+| Slot (`content/images.ts`) | Current file | What to supply |
+|---|---|---|
+| `home.hero` | `uc-filter-service.jpg` (1536 px) | Landscape technician photo ≥ 1920 px wide, subject in the right two-thirds |
+| `home.about` / `home.aboutDetail` | `uc-wash-bag-rinse-hero.jpg` / `uc-tech-cap.jpg` | 4:3 wash-bag photo + a square close-up |
+| `beforeAfter[0]` | `uc-filter-dusty.jpg` + `uc-filter-blue.jpg` | Same unit, same angle, before and after. Set `genuine: true` to switch the stacked pair to the interactive slider |
+| `gallery[]` | `uc-*.jpg` technique photos | Real job photos; captions describe the technique shown |
+| `services.cassette-cleaning.*` | `cassette-unit.jpg`, `cassette-unit-2.jpg` (Wikimedia Commons, CC BY-SA 4.0) | Own cassette photos; removing these also removes the footer credit |
+| `services.under-ceiling-cleaning.hero/card` | `suspended-unit.jpg` (Wikimedia Commons, CC BY-SA 4.0) | Own photo of a suspended under-ceiling unit |
+| `services.ducted-system-cleaning.detail` | `ceiling-diffuser.jpg` (Pexels) | Own ducted outlet / return grille photo |
+| `services.bulkhead-cleaning.hero` | `return-grille.jpg` (Pexels) | Own bulkhead grille photo |
+| `services.outdoor-condenser-cleaning.*` | stock condensers | Own outdoor-unit photos |
+| `about.who` | `uc-blue-bag-spray.jpg` | Team / technician photo, 5:4 |
+| `sectors.residential` | `hero-2.jpg` (stock interior) | Home interior with a visible unit |
+| `banners.*` | mixed | 5:4 photos for the split page banners |
+
+`about-who.jpg`, `hero-1.jpg` and the `*-detail.jpg` condenser files show refrigerant gauges or outdoor units
+and are no longer referenced; they can be deleted once confirmed unused.
+
+## Decorative library
+
+Geometric accents (accent lines, corner brackets, blue blocks, airflow curves, numbered labels,
+check rows, info panels, badges) live in `components/ui/Accents.tsx`. Section heading variants
+(editorial / centered / split / numbered) live in `components/ui/SectionHeading.tsx`.
+
+## Licences
+
+- Pexels and Unsplash photos need no attribution.
+- Client-supplied `uc-*.jpg` photos are used with permission.
+- Three Wikimedia Commons photos (`cassette-unit.jpg`, `cassette-unit-2.jpg`, `suspended-unit.jpg`) are CC BY-SA 4.0 and
+  **must stay attributed**: the footer renders `ccAttributions` from `content/images.ts`. Remove the entry when the photo is replaced.

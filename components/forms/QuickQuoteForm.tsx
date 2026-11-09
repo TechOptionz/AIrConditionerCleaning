@@ -8,8 +8,9 @@ import { quickUnitOptions } from "@/content/booking";
 import { cn } from "@/lib/utils";
 
 /**
- * Homepage 4-field mini form. Nothing is submitted here: it hands the values
- * to /book as query parameters so the full, validated booking form is prefilled.
+ * Homepage 4-field mini form rendered as a white bar under the hero. Nothing
+ * is submitted here: it hands the values to /book as query parameters so the
+ * full, validated booking form is prefilled.
  */
 export function QuickQuoteForm() {
   const router = useRouter();
@@ -32,55 +33,56 @@ export function QuickQuoteForm() {
     router.push(`/book${p.toString() ? `?${p}` : ""}`);
   };
 
-  const label = "flex flex-col gap-1.5 text-[13px] font-semibold leading-none text-white/90";
-  // Frosted fields that sit on the glass card: translucent fill, white text, crisp focus ring.
-  const glassField =
-    "h-12 w-full rounded-sm border border-white/30 bg-white/12 px-3.5 text-[16px] text-white placeholder:text-white/55 outline-none backdrop-blur-[6px] transition-[border-color,background-color,box-shadow] duration-150 hover:bg-white/16 focus:border-teal-300 focus:bg-white/18 focus:shadow-[0_0_0_3px_rgba(142,209,218,.28)] aria-[invalid=true]:border-danger";
+  const label = "flex flex-col gap-1.5 text-[12.5px] font-semibold leading-none text-ink";
+  const field =
+    "h-12 w-full rounded-md border border-line-strong bg-white px-3.5 text-[15px] text-ink outline-none transition-[border-color,box-shadow] duration-150 hover:border-blue-300 focus:border-blue-600 focus:shadow-[0_0_0_3px_rgba(0,102,204,.18)]";
 
   return (
-    <form
-      onSubmit={onSubmit}
-      aria-labelledby="quick-h"
-      className="liquid-glass relative w-full overflow-hidden rounded-xl p-[clamp(22px,3vw,32px)] text-white"
-    >
-      <h2 id="quick-h" className="relative font-display text-[clamp(1.375rem,1.2rem+.8vw,1.75rem)] font-extrabold leading-[1.2] tracking-[-.015em]">
-        {quickForm.title}
-      </h2>
-      <p className="relative mt-2 text-[14.5px] leading-[1.5] text-white/80">{quickForm.lead}</p>
-      <div className="relative mt-5 grid grid-cols-[repeat(auto-fit,minmax(min(100%,200px),1fr))] gap-3.5">
-        <label className={label}>
-          Name
-          <input name="name" value={values.name} onChange={onChange} autoComplete="name" className={glassField} />
-        </label>
-        <label className={label}>
-          Phone
-          <input name="phone" type="tel" inputMode="tel" value={values.phone} onChange={onChange} autoComplete="tel" className={glassField} />
-        </label>
-        <label className={label}>
-          Suburb or postcode
-          <input name="suburb" value={values.suburb} onChange={onChange} autoComplete="postal-code" className={glassField} />
-        </label>
-        <label className={label}>
-          Type of air conditioner
-          <select name="unit" value={values.unit} onChange={onChange} className={cn(glassField, "field-select field-select-light")}>
-            <option value="" className="text-ink">Select…</option>
-            {quickUnitOptions.map((o) => (
-              <option key={o.label} value={o.value} className="text-ink">
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </label>
+    <form onSubmit={onSubmit} aria-labelledby="quick-h" className="relative overflow-hidden rounded-lg border border-line bg-white p-5 shadow-deep sm:p-6 lg:p-7">
+      <span className="absolute inset-y-0 left-0 w-1 bg-blue-600" aria-hidden="true" />
+      <div className="grid gap-5 lg:grid-cols-[minmax(200px,0.9fr)_2.4fr] lg:items-end lg:gap-8">
+        <div>
+          <h2 id="quick-h" className="font-display text-[clamp(1.125rem,1rem+.5vw,1.375rem)] font-bold leading-[1.2] tracking-[-.015em] text-ink">
+            {quickForm.title}
+          </h2>
+          <p className="mt-1.5 text-[13.5px] leading-[1.5] text-muted">{quickForm.lead}</p>
+        </div>
+        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1.2fr_auto]">
+          <label className={label}>
+            Name
+            <input name="name" value={values.name} onChange={onChange} autoComplete="name" className={field} />
+          </label>
+          <label className={label}>
+            Phone
+            <input name="phone" type="tel" inputMode="tel" value={values.phone} onChange={onChange} autoComplete="tel" className={field} />
+          </label>
+          <label className={label}>
+            Suburb or postcode
+            <input name="suburb" value={values.suburb} onChange={onChange} autoComplete="postal-code" className={field} />
+          </label>
+          <label className={label}>
+            Type of air conditioner
+            <select name="unit" value={values.unit} onChange={onChange} className={cn(field, "field-select")}>
+              <option value="">Select…</option>
+              {quickUnitOptions.map((o) => (
+                <option key={o.label} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="submit"
+            disabled={busy}
+            aria-label={`${quickForm.cta} to the booking form`}
+            className="group inline-flex h-12 cursor-pointer items-center justify-center gap-2 self-end rounded-md border-0 bg-action px-5 shadow-cta text-[15px] font-semibold leading-none text-white transition-[background-color,box-shadow] duration-200 ease-out hover:bg-action-hover hover:shadow-primary disabled:opacity-70 sm:col-span-2 xl:col-span-1"
+          >
+            {quickForm.cta}
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+          </button>
+        </div>
       </div>
-      <button
-        type="submit"
-        disabled={busy}
-        className="group relative mt-[18px] inline-flex h-[52px] w-full cursor-pointer items-center justify-center gap-2 rounded-md border-0 bg-teal-600 text-[15.5px] font-semibold leading-none text-white shadow-[0_10px_24px_rgba(19,124,139,.35)] transition-[background-color,transform,gap] duration-250 ease-out hover:-translate-y-px hover:gap-3.5 hover:bg-teal-700 disabled:opacity-70"
-      >
-        {quickForm.cta}
-        <ArrowRight className="size-[18px]" aria-hidden="true" />
-      </button>
-      <p className="relative mt-3 text-[12.5px] leading-[1.5] text-white/70">{quickForm.note}</p>
+      <p className="mt-3.5 text-[12.5px] leading-[1.5] text-muted">{quickForm.note}</p>
     </form>
   );
 }

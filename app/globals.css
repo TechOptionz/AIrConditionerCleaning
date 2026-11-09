@@ -1,60 +1,78 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Northline Air Care design tokens — Deep Navy · Teal · Warm White
-   Source: design-reference/Northline Air Care.dc.html (approved Claude Design)
+   Northline Air Care design tokens — White · Electric Blue · Dark Navy
+   Bright, photography-led palette. White is the dominant surface, sky-50 is
+   the alternate section surface, electric blue carries for actions and accents and
+   navy is kept for headings, the footer and one contrast section per page.
    --------------------------------------------------------------------------- */
 @theme {
-  /* Brand */
-  --color-navy-950: #0a1b2e;   /* footer */
-  --color-navy-900: #0f2238;   /* dark sections, hero base */
-  --color-navy-800: #10233b;   /* headings / ink */
-  --color-navy-700: #15304f;   /* secondary buttons */
-  --color-teal-700: #0f6a77;   /* primary hover */
-  --color-teal-600: #137c8b;   /* primary */
-  --color-teal-300: #8ed1da;   /* eyebrows on dark */
-  --color-teal-100: #c9e5e8;   /* card hover border */
-  --color-teal-50:  #e8f4f5;   /* tints */
-  /* Warm neutrals */
-  --color-cream-50:  #faf8f4;  /* page background */
-  --color-cream-100: #f2efe9;  /* alternate surface */
-  --color-cream-200: #ece9e2;
-  --color-line:      #e2dfd8;  /* borders */
-  --color-line-strong: #cfcbc2;/* input borders */
-  --color-ink:       #10233b;
-  --color-body:      #3f4753;
-  --color-muted:     #646d79;
-  --color-faint:     #8a929d;
+  /* Electric blue — CTAs, links, icons, section labels, accent lines */
+  --color-blue-50:  #ebf3ff;   /* tint surfaces, icon chips */
+  --color-blue-100: #d6e8ff;
+  --color-blue-200: #adcfff;
+  --color-blue-300: #7ab3ff;   /* accent on dark surfaces (6.8:1 on navy) */
+  --color-blue-400: #4d94f0;   /* hover borders */
+  --color-blue-500: #1f7ae0;
+  --color-blue-600: #0066cc;   /* primary — 5.6:1 with white text */
+  --color-blue-700: #0056ad;   /* hover, text links — 7.2:1 */
+  --color-blue-800: #004a94;   /* pressed, tint text */
+  --color-blue-900: #003d7a;
+
+  /* Action aliases — primary passes AA with white, so CTAs use the pure blue */
+  --color-action:        #0066cc;
+  --color-action-hover:  #0056ad;
+  --color-action-active: #004a94;
+
+  /* Surfaces */
+  --color-sky-50:  #f0f7ff;    /* cool alternate section background */
+  --color-sky-100: #e1eefc;
+  --color-line:        #d6e5f5;   /* subtle border */
+  --color-line-strong: #b9d1ec;   /* input borders, dividers */
+
+  /* Dark navy — headings, contrast sections, footer */
+  --color-navy-950: #0b1f33;   /* footer */
+  --color-navy-900: #102a43;   /* headings, contrast sections */
+  --color-navy-800: #1a3b5c;   /* navy button hover */
+  --color-navy-700: #243f63;
+
+  /* Text — navy-tinted greys so body copy sits in the same family */
+  --color-ink:   #102a43;
+  --color-body:  #334e68;   /* 8.0:1 on sky-50 */
+  --color-muted: #52677d;   /* 5.4:1 on sky-50 */
+  --color-faint: #58708c;   /* 4.7:1 on sky-50 — numerals, placeholders */
+
   --color-danger:    #c8382e;
   --color-warn-bg:   #fff6e5;
   --color-warn-line: #f3d9a4;
   --color-warn-ink:  #7a5300;
 
   /* Type */
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 
-  /* Radii */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
-  --radius-3xl: 28px;
+  /* Radii — deliberately restrained */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --radius-3xl: 24px;
 
-  /* Shadows */
-  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04);
-  --shadow-hover: 0 12px 28px rgba(16, 24, 40, 0.12);
-  --shadow-lift: 0 18px 40px rgba(16, 24, 40, 0.1);
-  --shadow-deep: 0 24px 50px rgba(16, 24, 40, 0.14);
-  --shadow-hero: 0 24px 60px rgba(5, 15, 30, 0.35);
-  --shadow-primary: 0 10px 24px rgba(19, 124, 139, 0.25);
+  /* Shadows — soft and controlled */
+  --shadow-card: 0 1px 2px rgba(16, 42, 67, 0.05);
+  --shadow-hover: 0 10px 24px rgba(16, 42, 67, 0.1);
+  --shadow-lift: 0 16px 36px rgba(16, 42, 67, 0.1);
+  --shadow-deep: 0 24px 48px rgba(16, 42, 67, 0.14);
+  --shadow-primary: 0 8px 20px rgba(0, 102, 204, 0.3);
+  --shadow-cta: 0 4px 12px rgba(0, 102, 204, 0.22);
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  /* Breakpoints (design blueprint) */
+  /* Breakpoints */
   --breakpoint-xs: 25rem;    /* 400 */
   --breakpoint-sm: 40rem;    /* 640 */
   --breakpoint-md: 48rem;    /* 768 */
@@ -62,18 +80,18 @@
   --breakpoint-xl: 80rem;    /* 1280 */
   --breakpoint-2xl: 90rem;   /* 1440 */
 
-  --container-site: 1240px;
-  --container-narrow: 880px;
+  --container-site: 1200px;
+  --container-narrow: 860px;
 }
 
 /* ---------- Base (layered so Tailwind utilities always win) ---------- */
 @layer base {
   html {
-    scroll-padding-top: 88px;
+    scroll-padding-top: 96px;
     scroll-behavior: smooth;
   }
   body {
-    background: var(--color-cream-50);
+    background: #ffffff;
     color: var(--color-body);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -83,16 +101,16 @@
   * { box-sizing: border-box; min-width: 0; }
   input, select, textarea, button { font-family: inherit; }
   input::placeholder, textarea::placeholder { color: var(--color-faint); }
-  a { color: var(--color-teal-600); }
-  a:hover { color: var(--color-teal-700); }
+  a { color: var(--color-blue-700); }
+  a:hover { color: var(--color-blue-800); }
 
-  h1, h2, h3, h4 { text-wrap: balance; }
+  h1, h2, h3, h4 { text-wrap: balance; color: var(--color-ink); }
   p { text-wrap: pretty; }
 
   :focus-visible {
-    outline: 2px solid var(--color-teal-600);
+    outline: 2px solid var(--color-blue-700);
     outline-offset: 2px;
-    border-radius: 6px;
+    border-radius: 4px;
   }
 
   input[type="number"]::-webkit-outer-spin-button,
@@ -100,119 +118,91 @@
   input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 }
 
-/* ---------- Utilities used across sections ---------- */
+/* ---------- Layout utilities ---------- */
 @utility container-site {
   width: 100%;
   max-width: var(--container-site);
   margin-inline: auto;
-  padding-inline: clamp(16px, 3vw, 32px);
+  padding-inline: clamp(16px, 4vw, 40px);
 }
 @utility container-narrow {
   width: 100%;
   max-width: var(--container-narrow);
   margin-inline: auto;
-  padding-inline: clamp(16px, 3vw, 32px);
+  padding-inline: clamp(16px, 4vw, 40px);
 }
-@utility section-y {
-  padding-block: clamp(64px, 8vw, 96px);
-}
-@utility section-y-lg {
-  padding-block: clamp(64px, 8vw, 104px);
-}
+/* Section rhythm: three sizes so spacing is chosen per section, not uniform. */
+@utility section-y-sm { padding-block: clamp(40px, 5vw, 64px); }
+@utility section-y    { padding-block: clamp(56px, 7vw, 88px); }
+@utility section-y-lg { padding-block: clamp(64px, 8vw, 112px); }
+
+/* ---------- Type scale ---------- */
 @utility eyebrow {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 12.5px;
+  font-size: 12px;
   line-height: 1;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 @utility display-1 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.375rem, 1.5rem + 3.2vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
 }
 @utility display-2 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.875rem, 1.35rem + 2vw, 3rem);
-  line-height: 1.06;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.75rem, 1.3rem + 1.7vw, 2.625rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
 }
 @utility display-3 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
 }
 @utility lead {
-  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
-  line-height: 1.55;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  line-height: 1.6;
 }
-@utility dark-glow-left {
-  background: var(--color-navy-900) radial-gradient(900px 600px at 0% 100%, rgba(19,124,139,.28), transparent 60%);
-}
-@utility dark-glow-right {
-  background: var(--color-navy-900) radial-gradient(900px 600px at 100% 0%, rgba(19,124,139,.28), transparent 60%);
-}
+
+/* ---------- Decorative surfaces ---------- */
+/* Hero scrim: readable left column, photo stays visible on the right. */
 @utility hero-scrim {
-  background: linear-gradient(100deg, rgba(10,27,46,.94) 0%, rgba(10,27,46,.72) 40%, rgba(10,27,46,.18) 100%);
+  background: linear-gradient(95deg, rgba(11, 31, 51, 0.86) 0%, rgba(11, 31, 51, 0.66) 38%, rgba(11, 31, 51, 0.22) 72%, rgba(11, 31, 51, 0.08) 100%);
 }
-/* Liquid glass card: see-through, frosted, with an edge highlight and soft sheen.
-   The light navy tint keeps white text readable over bright photos. */
-@utility liquid-glass {
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 42%, rgba(255, 255, 255, 0.12) 100%),
-    rgba(10, 27, 46, 0.34);
-  -webkit-backdrop-filter: blur(16px) saturate(1.7);
-  backdrop-filter: blur(16px) saturate(1.7);
-  border: 1px solid rgba(255, 255, 255, 0.34);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 0 24px rgba(255, 255, 255, 0.06),
-    0 24px 60px rgba(4, 14, 26, 0.35);
-  text-shadow: 0 1px 2px rgba(4, 14, 26, 0.25);
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: radial-gradient(120% 70% at 0% 0%, rgba(255, 255, 255, 0.28), transparent 55%);
-  }
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    background: rgba(10, 27, 46, 0.78);
-  }
-}
-@utility banner-scrim {
-  background: linear-gradient(100deg, rgba(10,27,46,.96) 0%, rgba(10,27,46,.84) 40%, rgba(10,27,46,.42) 100%);
+/* Fine dotted grid used very sparingly behind light banners. */
+@utility dot-grid {
+  background-image: radial-gradient(rgba(0, 102, 204, 0.16) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 @utility mono-placeholder {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.85em;
-  background: var(--color-cream-100);
+  background: var(--color-sky-100);
   padding: 2px 6px;
-  border-radius: 6px;
+  border-radius: 4px;
   color: var(--color-muted);
 }
 
 /* ---------- Keyframes ---------- */
-@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.025); } }
-@keyframes drift { from { transform: translate3d(-4%, 2%, 0); } to { transform: translate3d(4%, -3%, 0); } }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.035); } }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes airflow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -120; } }
 
-.animate-kenburns { animation: kenburns 8s ease-in-out infinite alternate; }
-.animate-drift { animation: drift 22s ease-in-out infinite alternate; }
+.animate-kenburns { animation: kenburns 14s ease-in-out infinite alternate; }
 .animate-spin-slow { animation: spin 1s linear infinite; }
+.animate-airflow { animation: airflow 9s linear infinite; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .animate-kenburns, .animate-drift { animation: none !important; }
+  .animate-kenburns, .animate-airflow { animation: none !important; }
   *, *::before, *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
@@ -223,12 +213,8 @@
 /* Native select chevron */
 select.field-select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23646D79' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2352677D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   padding-right: 40px;
-}
-/* White chevron for selects on dark or glass surfaces */
-select.field-select.field-select-light {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 }

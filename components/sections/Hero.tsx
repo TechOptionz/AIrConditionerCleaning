@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import { useReducedMotionSafe as useReducedMotion } from "@/lib/useReducedMotionSafe";
 import { hero } from "@/content/home";
@@ -11,92 +10,71 @@ import { HeroMedia, HeroUp, LineUp } from "@/components/motion/HeroText";
 import { QuickQuoteForm } from "@/components/forms/QuickQuoteForm";
 import { cn } from "@/lib/utils";
 
-const ORIGINS = ["70% 50%", "60% 40%", "50% 50%", "50% 40%"];
-
-/** Cinematic homepage hero: indoor-cleaning Ken Burns crossfade, masked headline, glass quick form. */
+/**
+ * Photography-led homepage hero: one large technician photograph under a
+ * left-weighted scrim, masked headline, two CTAs and a compact booking bar
+ * that overlaps the bottom edge.
+ */
 export function Hero() {
-  const [slide, setSlide] = useState(0);
   const reduce = useReducedMotion();
-  const slides = images.hero;
-
-  useEffect(() => {
-    if (reduce) return;
-    const t = setInterval(() => {
-      if (!document.hidden) setSlide((s) => (s + 1) % slides.length);
-    }, hero.slideIntervalMs);
-    return () => clearInterval(t);
-  }, [reduce, slides.length]);
+  const photo = images.home.hero;
 
   return (
-    <section
-      aria-label="Hero"
-      className="relative -mt-20 flex min-h-[min(92vh,860px)] items-center overflow-hidden bg-navy-900 pb-[clamp(56px,7vw,88px)] pt-[calc(80px+clamp(56px,8vw,96px))] text-white"
-    >
-      <HeroMedia>
-        <div className="absolute inset-0">
-          {slides.map((s, i) => {
-            const on = i === slide;
-            return (
-              <div key={s.src} className={cn("absolute inset-0 transition-opacity duration-[900ms] ease-out", on ? "opacity-100" : "opacity-0")} aria-hidden={!on}>
-                <div className={cn("absolute inset-0", !reduce && "animate-kenburns")} style={{ transformOrigin: ORIGINS[i % ORIGINS.length], animationPlayState: on ? "running" : "paused" }}>
-                  <Image src={s.src} alt="" fill priority={i === 0} loading={i === 0 ? "eager" : "lazy"} sizes="100vw" quality={82} className="object-cover" style={{ objectPosition: s.focal ?? ORIGINS[i % ORIGINS.length] }} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </HeroMedia>
-      <div className="hero-scrim pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="animate-drift pointer-events-none absolute -inset-[20%] mix-blend-screen" style={{ background: "radial-gradient(closest-side at 70% 55%, rgba(19,124,139,.38), transparent 70%)" }} aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[120px] bg-gradient-to-b from-transparent to-navy-950/60" aria-hidden="true" />
+    <>
+      <section aria-label="Introduction" className="relative isolate flex min-h-[min(82vh,760px)] items-center overflow-hidden bg-navy-900 pb-[clamp(96px,14vw,150px)] pt-[clamp(56px,8vw,96px)] text-white">
+        <HeroMedia>
+          <div className={cn("absolute inset-0", !reduce && "animate-kenburns")} style={{ transformOrigin: "70% 40%" }}>
+            <Image src={photo.src} alt="" fill priority sizes="100vw" quality={82} className="object-cover" style={{ objectPosition: photo.focal }} />
+          </div>
+        </HeroMedia>
+        <div className="hero-scrim pointer-events-none absolute inset-0" aria-hidden="true" />
 
-      <div className="container-site relative grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] items-center gap-[clamp(40px,5vw,72px)]">
-        <div className="max-w-[620px]">
-          <HeroUp delay={0.1} className="eyebrow flex items-center gap-3 text-teal-300">
-            <span className="h-0.5 w-8 bg-teal-300" aria-hidden="true" />
-            {hero.eyebrow}
-          </HeroUp>
-          <h1 className="display-1 mt-5">
-            <LineUp lines={hero.headlineLines} />
-          </h1>
-          <HeroUp as="p" delay={0.38} className="mt-[22px] max-w-[48ch] text-[clamp(1.0625rem,1rem+.45vw,1.25rem)] leading-[1.55] text-white/82">
-            {hero.lead}
-          </HeroUp>
-          <HeroUp delay={0.5} className="mt-8 flex flex-wrap gap-3">
-            <Button href={hero.primaryCta.href} size="lg" arrow className="flex-[1_1_200px]">
-              {hero.primaryCta.label}
-            </Button>
-            <Button href={hero.secondaryCta.href} size="lg" variant="outline-light" className="flex-[1_1_200px]">
-              {hero.secondaryCta.label}
-            </Button>
-          </HeroUp>
-          <HeroUp delay={0.62} className="mt-[30px] flex flex-wrap gap-x-[22px] gap-y-2.5 text-[14px] text-white/78">
-            {hero.trustLine.map((t) => (
-              <span key={t} className="inline-flex items-center gap-2">
-                <Check className="size-4 text-teal-300" strokeWidth={2.2} aria-hidden="true" />
-                {t}
-              </span>
-            ))}
-          </HeroUp>
-        </div>
+        {/* Airflow lines: a quiet nod to the wave mark, bottom-right only. */}
+        <svg className="pointer-events-none absolute -right-10 bottom-16 hidden w-[46vw] max-w-[760px] text-blue-300/40 lg:block" viewBox="0 0 760 220" fill="none" aria-hidden="true">
+          <path d="M0 160 C 140 80, 260 240, 400 150 S 640 60, 760 130" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6 10" className="animate-airflow" />
+          <path d="M0 200 C 160 120, 280 270, 420 185 S 660 100, 760 170" stroke="currentColor" strokeWidth="1" strokeOpacity=".6" />
+        </svg>
 
-        <HeroUp delay={0.45} className="w-full max-w-[520px] justify-self-end">
+        <div className="container-site relative">
+          <div className="max-w-[640px]">
+            <HeroUp delay={0.08} className="eyebrow flex items-center gap-2.5 text-blue-300">
+              <span className="h-px w-7 bg-blue-300" aria-hidden="true" />
+              {hero.eyebrow}
+            </HeroUp>
+            <h1 className="display-1 mt-5 text-white">
+              <LineUp lines={hero.headlineLines} />
+            </h1>
+            <HeroUp as="p" delay={0.36} className="mt-6 max-w-[50ch] text-[clamp(1.0625rem,1rem+.35vw,1.1875rem)] leading-[1.6] text-white/82">
+              {hero.lead}
+            </HeroUp>
+            <HeroUp delay={0.48} className="mt-8 flex flex-wrap gap-3">
+              <Button href={hero.primaryCta.href} size="lg" arrow>
+                {hero.primaryCta.label}
+              </Button>
+              <Button href={hero.secondaryCta.href} size="lg" variant="outline-light">
+                {hero.secondaryCta.label}
+              </Button>
+            </HeroUp>
+            <HeroUp delay={0.6} className="mt-8 flex flex-wrap gap-x-6 gap-y-2.5 text-[14px] text-white/80">
+              {hero.trustLine.map((t) => (
+                <span key={t} className="inline-flex items-center gap-2">
+                  <span className="grid size-[18px] place-items-center rounded-full bg-blue-600/90">
+                    <Check className="size-3 text-white" strokeWidth={3} aria-hidden="true" />
+                  </span>
+                  {t}
+                </span>
+              ))}
+            </HeroUp>
+          </div>
+        </div>
+      </section>
+
+      {/* Compact booking bar overlapping the hero's bottom edge. */}
+      <div className="container-site relative z-10 -mt-[clamp(64px,9vw,96px)]">
+        <HeroUp delay={0.55}>
           <QuickQuoteForm />
         </HeroUp>
       </div>
-
-      <div className="absolute bottom-6 right-[clamp(16px,3vw,32px)] z-[2] flex gap-2" role="group" aria-label="Hero slides">
-        {slides.map((s, i) => (
-          <button
-            key={s.src}
-            type="button"
-            aria-label={`Show slide ${i + 1}`}
-            aria-pressed={i === slide}
-            onClick={() => setSlide(i)}
-            className={cn("h-1.5 cursor-pointer rounded-full border-0 p-0 transition-[width,background-color] duration-[400ms] ease-out", i === slide ? "w-7 bg-teal-300" : "w-2 bg-white/40 hover:bg-white/70")}
-          />
-        ))}
-      </div>
-    </section>
+    </>
   );
 }

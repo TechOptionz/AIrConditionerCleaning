@@ -35,8 +35,8 @@ export function FaqTabs() {
               onClick={() => setTab(c)}
               onKeyDown={(e) => onKey(e, i)}
               className={cn(
-                "h-11 shrink-0 cursor-pointer rounded-full border px-[18px] text-[14.5px] font-semibold leading-none transition-colors duration-200",
-                on ? "border-teal-600 bg-teal-600 text-white" : "border-line bg-white text-ink hover:border-teal-600",
+                "h-10 shrink-0 cursor-pointer rounded-md border px-4 text-[14px] font-semibold leading-none transition-colors duration-200",
+                on ? "border-action bg-action text-white" : "border-line-strong bg-white text-ink hover:border-blue-400 hover:text-blue-700",
               )}
             >
               {c}

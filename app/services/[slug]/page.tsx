@@ -3,23 +3,24 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, Info, Phone } from "lucide-react";
 import { services, getService, relatedServices, sharedServiceFaqs, detailSteps, safetyNote } from "@/content/services";
-import { images, frameAspect } from "@/content/images";
+import { images } from "@/content/images";
 import { site } from "@/content/site";
 import { closingCta } from "@/content/home";
 import { pageMetadata, serviceJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { telHref } from "@/lib/utils";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { PageBanner } from "@/components/sections/PageBanner";
-import { SectionHeading, Eyebrow } from "@/components/ui/SectionHeading";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Airflow, BlueBlock, FramedMedia, InfoPanel } from "@/components/ui/Accents";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
-import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { ClipReveal } from "@/components/motion/ClipReveal";
 import { PackageCards } from "@/components/sections/Packages";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
 import { QuoteCTA } from "@/components/sections/QuoteCTA";
-import { CompareSlider } from "@/components/sections/BeforeAfter";
+import { BeforeAfterMedia } from "@/components/sections/BeforeAfter";
+import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 
 type Params = { slug: string };
 
@@ -43,10 +44,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
   const related = relatedServices(svc);
   const pair = images.beforeAfter.find((p) => p.slug === svc.slug);
   const cta = closingCta.service(svc.unit);
+  const phoneOk = !site.phoneIsPlaceholder;
 
   return (
     <>
       <PageBanner
+        variant="split"
         crumbs={[{ label: "Services", href: "/services" }, { label: svc.short }]}
         eyebrow="Cleaning by system type"
         lines={[svc.h1]}
@@ -55,96 +58,93 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
         wide
         actions={
           <>
-            <Button href="/book" size="lg" className="!h-[52px]" arrow>
+            <Button href="/book" size="lg" arrow>
               Request a Quote
             </Button>
-            <Button href={telHref(site.phone)} size="lg" variant="outline-light" className="!h-[52px]" icon={<Phone className="size-4" aria-hidden="true" />}>
-              Call {site.phone}
-            </Button>
+            {phoneOk ? (
+              <Button href={telHref(site.phone)} size="lg" variant="outline" icon={<Phone className="size-4 text-blue-600" aria-hidden="true" />}>
+                Call {site.phone}
+              </Button>
+            ) : (
+              <Button href="/contact" size="lg" variant="outline">
+                Ask a question
+              </Button>
+            )}
           </>
         }
       />
 
       {/* Overview + scope */}
-      <section className="section-y">
-        <div className="container-site grid grid-cols-[repeat(auto-fit,minmax(min(100%,400px),1fr))] items-center gap-[clamp(32px,5vw,72px)]">
-          <ClipReveal radius={24} className={`${frameAspect(svc.images.detail)} max-h-[560px] w-full bg-cream-100`}>
-            <Image src={svc.images.detail.src} alt={svc.images.detail.alt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" style={{ objectPosition: svc.images.detail.focal }} />
-          </ClipReveal>
-          <Reveal index={1}>
-            <Eyebrow>Overview</Eyebrow>
-            <h2 className="display-2 mt-3 text-ink">What to know about this system</h2>
-            <p className="lead mt-4 max-w-[56ch] text-body">{svc.intro}</p>
-            <h3 className="mt-8 text-[17px] font-semibold leading-[1.3] text-ink">What a service may include</h3>
-            <ul className="m-0 mt-3.5 flex list-none flex-col gap-2.5 p-0">
-              {svc.scope.map((s) => (
-                <li key={s} className="flex items-start gap-3 leading-[1.5] text-body">
-                  <span className="mt-px grid size-[22px] shrink-0 place-items-center rounded-full bg-teal-50">
-                    <Check className="size-3.5 text-teal-600" strokeWidth={2.5} aria-hidden="true" />
-                  </span>
-                  {s}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-[18px] text-[13px] leading-[1.5] text-muted">Inclusions are confirmed for your specific unit and access before any work is agreed.</p>
+      <section className="pb-[clamp(56px,7vw,88px)] pt-[clamp(64px,9vw,112px)]">
+        <div className="container-site grid items-start gap-[clamp(32px,5vw,72px)] lg:grid-cols-[1fr_1fr]">
+          <Reveal>
+            <SectionHeading variant="numbered" number={1} eyebrow="Overview" title="What to know about this system" />
+            <p className="mt-5 max-w-[56ch] text-[16px] leading-[1.7] text-body">{svc.intro}</p>
+            <div className="mt-8 border-t border-line pt-6">
+              <h3 className="m-0 font-display text-[17px] font-bold leading-[1.3] text-ink">What a service may include</h3>
+              <ul className="m-0 mt-4 grid list-none gap-x-6 gap-y-3 p-0 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                {svc.scope.map((s) => (
+                  <li key={s} className="flex items-start gap-3 text-[14.5px] leading-[1.55] text-body">
+                    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-blue-600 text-white">
+                      <Check className="size-3" strokeWidth={3} aria-hidden="true" />
+                    </span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-5 text-[13px] leading-[1.5] text-muted">Inclusions are confirmed for your specific unit and access before any work is agreed.</p>
+            </div>
           </Reveal>
+
+          <div className="relative pl-6 pt-6">
+            <BlueBlock tone="sky" className="left-0 top-0 size-24" />
+            <FramedMedia className="relative bg-white">
+              <ClipReveal radius={2} className="absolute inset-0">
+                <Image src={svc.images.detail.src} alt={svc.images.detail.alt} fill sizes="(max-width: 1024px) 100vw, 560px" className="object-cover" style={{ objectPosition: svc.images.detail.focal }} />
+              </ClipReveal>
+            </FramedMedia>
+            <Reveal delay={0.2} className="relative -mt-8 ml-auto w-[min(88%,420px)] shadow-lift">
+              <InfoPanel tone="white" label="Good to know" icon={<Info />}>
+                {safetyNote}
+              </InfoPanel>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {pair && (
-        <section aria-labelledby="h-ba" className="pb-[clamp(64px,8vw,96px)]">
-          <div className="container-site">
-            <SectionHeading id="h-ba" eyebrow="Before and after" title={`What a ${svc.unit} clean can look like`} lead="Drag to compare." className="mb-[clamp(28px,4vw,40px)]" />
+        <section aria-labelledby="h-ba" className="pb-[clamp(56px,7vw,88px)]">
+          <div className="container-site grid items-center gap-[clamp(28px,4vw,64px)] lg:grid-cols-[0.8fr_1.2fr]">
+            <SectionHeading id="h-ba" variant="numbered" number={2} eyebrow="Before and after" title={`What a ${svc.unit} clean can look like`} lead="The photographs show the type of work involved; every unit and level of build-up is different." maxWidth="max-w-[440px]" />
             <Reveal>
-              <CompareSlider pair={pair} className="mx-auto max-w-[980px]" />
+              <BeforeAfterMedia pair={pair} />
             </Reveal>
           </div>
         </section>
       )}
 
       {/* Packages */}
-      <section className="section-y bg-cream-100">
+      <section className="section-y border-y border-line bg-sky-50">
         <div className="container-site">
-          <SectionHeading eyebrow="Packages" title="Choose the level of attention your unit needs" align="center" className="mb-[clamp(32px,4vw,48px)]" />
+          <SectionHeading variant="split" number={3} eyebrow="Levels of care" title="Choose the level of attention your unit needs" lead="Every option is quoted after we understand the unit, its condition and access. We confirm the scope before any work is arranged." className="mb-[clamp(28px,4vw,44px)]" />
           <PackageCards />
         </div>
       </section>
 
       {/* Process */}
-      <section className="dark-glow-right section-y text-white">
-        <div className="container-site">
-          <Reveal className="mb-[clamp(32px,4vw,48px)] max-w-[720px]">
-            <Eyebrow tone="dark">Process</Eyebrow>
-            <h2 className="display-2 mt-3">How the appointment works</h2>
-          </Reveal>
-          <Stagger as="ol" className="relative m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,200px),1fr))] gap-4 p-0">
-            {detailSteps.map((st, i) => (
-              <StaggerItem as="li" key={st.title} className="relative flex min-h-[200px] flex-col gap-4 rounded-[18px] border border-white/12 bg-white/6 p-6 transition-[background-color,border-color,transform] duration-300 hover:-translate-y-1 hover:border-teal-300/45 hover:bg-teal-600/22">
-                <div className="flex items-center gap-3">
-                  <span className="grid size-[42px] shrink-0 place-items-center rounded-full bg-teal-600 font-display text-[15px] font-bold leading-none shadow-[0_0_0_6px_rgba(19,124,139,.18)]">{i + 1}</span>
-                  <span className="h-px flex-1 bg-teal-300/30" aria-hidden="true" />
-                </div>
-                <h3 className="m-0 text-[17px] font-semibold leading-[1.3]">{st.title}</h3>
-                <p className="m-0 mt-auto text-[14px] leading-[1.55] text-white/72">{st.body}</p>
-              </StaggerItem>
-            ))}
-          </Stagger>
-          <Reveal as="p" className="mt-8 flex max-w-[880px] items-start gap-3 rounded-md border border-white/12 bg-white/6 px-[18px] py-4 text-[14px] leading-[1.55] text-white/80">
-            <Info className="mt-px size-5 shrink-0 text-teal-300" aria-hidden="true" />
-            {safetyNote}
-          </Reveal>
+      <section className="section-y-lg relative overflow-hidden">
+        <Airflow className="-left-[10%] top-[60%] h-[240px] w-[120%] -translate-y-1/2 opacity-70" />
+        <div className="container-site relative">
+          <SectionHeading variant="centered" eyebrow="Process" title="How the appointment works" className="mb-[clamp(36px,5vw,60px)]" />
+          <ProcessTimeline steps={detailSteps} />
         </div>
       </section>
 
-      <FaqSection items={faqItems} title="Questions about this service" size="lg" bg="none" id="h-svc-faq" />
+      <FaqSection items={faqItems} eyebrow="Questions" title="Questions about this service" lead="Unit-specific answers first, followed by the questions every service shares." id="h-svc-faq" link={{ label: "Visit the help centre", href: "/faq" }} />
 
-      <section aria-labelledby="h-related" className="pb-[clamp(64px,8vw,96px)]">
+      <section aria-labelledby="h-related" className="section-y">
         <div className="container-site">
-          <Reveal>
-            <h2 id="h-related" className="display-3 mb-6 text-ink">
-              Related services
-            </h2>
-          </Reveal>
+          <SectionHeading id="h-related" eyebrow="Related" title="Related services" size="md" className="mb-7" />
           <ServiceGrid items={related} columns={3} />
         </div>
       </section>

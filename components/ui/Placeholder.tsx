@@ -8,8 +8,8 @@ export function Placeholder({ children, className, tone = "light" }: { children:
   return (
     <span
       className={cn(
-        "rounded-[6px] px-1.5 py-0.5 font-mono text-[0.85em]",
-        tone === "light" ? "bg-cream-100 text-muted" : "bg-white/10 text-white/70",
+        "rounded-sm px-1.5 py-0.5 font-mono text-[0.85em]",
+        tone === "light" ? "bg-sky-100 text-muted" : "bg-white/10 text-white/70",
         className,
       )}
       title="Placeholder — to be confirmed by the business"
@@ -22,7 +22,7 @@ export function Placeholder({ children, className, tone = "light" }: { children:
 /** Amber development notice used by forms when no delivery provider is configured. */
 export function DevNotice({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <p className={cn("rounded-[10px] border border-warn-line bg-warn-bg px-3.5 py-3 font-mono text-[12px] leading-[1.5] text-warn-ink", className)} role="status">
+    <p className={cn("rounded-md border border-warn-line bg-warn-bg px-3.5 py-3 font-mono text-[12px] leading-[1.5] text-warn-ink", className)} role="status">
       {children}
     </p>
   );

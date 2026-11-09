@@ -28,12 +28,12 @@ export function Logo({ tone = "dark", compact = false, className }: { tone?: Log
   const light = tone === "light";
   return (
     <Link href="/" aria-label={`${site.name} — home`} className={cn("flex shrink-0 items-center gap-3 no-underline", light ? "text-white" : "text-navy-900", className)}>
-      <LogoMark tone={tone} height={30} />
+      <LogoMark tone={tone} height={28} />
       <span className={cn("flex flex-col leading-none", compact && "max-[359px]:hidden")}>
-        <span className="font-display text-[19px] font-extrabold tracking-[-.02em]">
-          Northline <span className={cn("font-bold", light ? "text-teal-300" : "text-teal-600")}>Air Care</span>
+        <span className="font-display text-[18px] font-extrabold tracking-[-.02em]">
+          Northline <span className={cn("font-bold", light ? "text-blue-300" : "text-blue-700")}>Air Care</span>
         </span>
-        <span className={cn("mt-1 text-[9.5px] font-semibold uppercase tracking-[.22em]", light ? "text-white/75" : "text-navy-900/75")}>{site.tagline}</span>
+        <span className={cn("mt-1 text-[9px] font-semibold uppercase tracking-[.22em]", light ? "text-white/70" : "text-navy-900/65")}>{site.tagline}</span>
       </span>
     </Link>
   );
