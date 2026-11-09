@@ -30,12 +30,13 @@ export function LogoMark({ tone = "dark", height, className }: { tone?: LogoTone
 
 export function Logo({ tone = "dark", compact = false, className }: { tone?: LogoTone; compact?: boolean; className?: string }) {
   const light = tone === "light";
+  const { logo } = useLogo();
   return (
     <Link href="/" aria-label={`${site.name} — home`} className={cn("flex shrink-0 items-center gap-3 no-underline", light ? "text-white" : "text-navy-900", className)}>
       <LogoMark tone={tone} />
       <span className={cn("flex flex-col leading-none", compact && "max-[359px]:hidden")}>
         <span className="font-display text-[18px] font-extrabold tracking-[-.02em]">
-          Northline <span className={cn("font-bold", light ? "text-blue-300" : "text-blue-700")}>Air Care</span>
+          Northline <span className={cn("font-bold", light ? logo.wordAccent.light : logo.wordAccent.dark)}>Air Care</span>
         </span>
         <span className={cn("mt-1 text-[9px] font-semibold uppercase tracking-[.22em]", light ? "text-white/70" : "text-navy-900/65")}>{site.tagline}</span>
       </span>

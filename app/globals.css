@@ -42,6 +42,9 @@
   --color-muted: #52677d;   /* 5.4:1 on sky-50 */
   --color-faint: #58708c;   /* 4.7:1 on sky-50 — numerals, placeholders */
 
+  /* Brand orange — only used when the Option A logo is active (its "Air Care" wordmark) */
+  --color-brand-orange: #e8640c;
+
   --color-danger:    #c8382e;
   --color-warn-bg:   #fff6e5;
   --color-warn-line: #f3d9a4;
