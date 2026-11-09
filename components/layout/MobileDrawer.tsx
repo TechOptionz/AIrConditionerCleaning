@@ -10,6 +10,7 @@ import { site } from "@/content/site";
 import { cn, telHref } from "@/lib/utils";
 import { EASE_OUT } from "@/lib/motion";
 import { Logo } from "./Logo";
+import { LogoOptionList } from "./LogoSwitcher";
 
 type Props = { open: boolean; onClose: () => void; pathname: string };
 
@@ -114,6 +115,11 @@ export function MobileDrawer({ open, onClose, pathname }: Props) {
                   {s.short}
                 </Link>
               ))}
+              <div className="mx-3.5 mb-2 mt-5 flex items-center gap-2.5 eyebrow text-blue-700 sm:hidden">
+                <span className="h-px w-5 bg-blue-600" aria-hidden="true" />
+                Logo preview
+              </div>
+              <LogoOptionList className="sm:hidden" />
             </nav>
             <div className="flex flex-col gap-2.5 border-t border-line p-4">
               <Link href="/book" onClick={onClose} className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-action text-[15px] font-semibold leading-none text-white no-underline hover:bg-action-hover">

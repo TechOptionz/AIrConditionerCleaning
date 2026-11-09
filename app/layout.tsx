@@ -5,6 +5,7 @@ import { site } from "@/content/site";
 import { TopBar } from "@/components/layout/TopBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { LogoProvider } from "@/components/layout/LogoProvider";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { organisationJsonLd } from "@/lib/seo";
@@ -38,12 +39,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <MotionProvider>
-          <TopBar />
-          <Header />
-          <main id="content" className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          <LogoProvider>
+            <TopBar />
+            <Header />
+            <main id="content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </LogoProvider>
         </MotionProvider>
         <JsonLd data={organisationJsonLd()} />
       </body>

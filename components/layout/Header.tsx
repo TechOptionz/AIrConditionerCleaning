@@ -8,6 +8,7 @@ import { primaryNav } from "@/content/nav";
 import { site } from "@/content/site";
 import { cn, telHref } from "@/lib/utils";
 import { Logo } from "./Logo";
+import { LogoSwitcher } from "./LogoSwitcher";
 import { ServicesMenu } from "./ServicesMenu";
 import { MobileDrawer } from "./MobileDrawer";
 import { StickyCTA } from "./StickyCTA";
@@ -56,7 +57,10 @@ export function Header() {
           )}
         >
           <div className="container-site flex h-full items-center justify-between gap-4">
-            <Logo compact />
+            <div className="flex min-w-0 items-center gap-3">
+              <Logo compact />
+              <LogoSwitcher className="hidden sm:block" />
+            </div>
 
             <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-1 lg:flex">
               <ServicesMenu active={servicesActive} />
